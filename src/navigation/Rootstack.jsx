@@ -1,19 +1,53 @@
-import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-// React navigation 설정 변경시에는 서버 재실행 해주셔야 합니당
-
-// ------ [Screens] ------ //
+// ------ [ Screens ] ------
 import HomeScreen from "../screens/HomeScreen";
+import ProfileScreen from "../screens/profile/ProfileScreen";
+import ApplyScreen from "../screens/apply/ApplyScreen";
+import { NavigationContainer } from "@react-navigation/native";
 
-const Stack = createNativeStackNavigator();
+// ----- [ Tabs ] ------
+const Tab = createBottomTabNavigator();
 
-export default function RootStack() {
+const HomeStack = createNativeStackNavigator();
+const ApplyStack = createNativeStackNavigator();
+const ProfileStack = createNativeStackNavigator();
+
+const Rootstack = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="HomeScreen" component={HomeScreen} />
-      </Stack.Navigator>
+      <Tab.Navigator screenOptions={{ headerShown: false }}>
+        <Tab.Screen name="Home" component={HomeTabScreens} />
+        <Tab.Screen name="Apply" component={ApplyTabScreens} />
+        <Tab.Screen name="Profile" component={ProfileTabScreens} />
+      </Tab.Navigator>
     </NavigationContainer>
   );
-}
+};
+
+const HomeTabScreens = () => {
+  return (
+    <HomeStack.Navigator>
+      <HomeStack.Screen name="main" component={HomeScreen} />
+    </HomeStack.Navigator>
+  );
+};
+
+const ApplyTabScreens = () => {
+  return (
+    <ApplyStack.Navigator>
+      <ApplyStack.Screen name="main" component={ApplyScreen} />
+    </ApplyStack.Navigator>
+  );
+};
+
+const ProfileTabScreens = () => {
+  return (
+    <ProfileStack.Navigator>
+      <ProfileStack.Screen name="main" component={ProfileScreen} />
+    </ProfileStack.Navigator>
+  );
+};
+
+export default Rootstack;

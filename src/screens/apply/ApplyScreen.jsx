@@ -1,10 +1,10 @@
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 
-export default function HomeScreen({ navigation }) {
+export default function ApplyScreen() {
   return (
-    <View style={styles.container}>
-      <Text>HomeScreen</Text>
+    <View>
+      <Text>ApplyScreen</Text>
     </View>
   );
 }
