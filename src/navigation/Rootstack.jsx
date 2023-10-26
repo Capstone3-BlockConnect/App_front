@@ -6,6 +6,7 @@ import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/profile/ProfileScreen";
 import ApplyScreen from "../screens/apply/ApplyScreen";
 import { NavigationContainer } from "@react-navigation/native";
+import LoginScreen from "../screens/login/LoginScreen";
 
 // ----- [ Tabs ] ------
 const Tab = createBottomTabNavigator();
@@ -30,6 +31,7 @@ const HomeTabScreens = () => {
   return (
     <HomeStack.Navigator>
       <HomeStack.Screen name="main" component={HomeScreen} />
+      <HomeStack.Screen name="Login" component={LoginScreen} />
     </HomeStack.Navigator>
   );
 };
