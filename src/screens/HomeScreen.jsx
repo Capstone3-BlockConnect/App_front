@@ -1,16 +1,25 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Button, Image } from "react-native";
+import { ContainerView } from "./HomeScreen.style";
+import { useNavigation } from "@react-navigation/native";
 
 export default function HomeScreen({ navigation }) {
   return (
-    <View style={styles.container}>
+    <ContainerView>
       <Text>HomeScreen</Text>
-    </View>
+      <Button
+        title="login"
+        onPress={() => {
+          navigation.navigate("Login");
+        }}
+      />
+      <Image
+        source={{
+          uri: "https://cdn-icons-png.flaticon.com/512/124/124021.png",
+        }}
+        alt="fef"
+        style={{ height: "150", width: "150" }}
+      />
+    </ContainerView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
