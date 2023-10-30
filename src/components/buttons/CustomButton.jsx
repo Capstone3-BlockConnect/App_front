@@ -9,11 +9,15 @@ mode
 contained : 기본
 outlined : 부수
 */
-export default function CustomButton({ buttonText = "입력해주세요", mode }) {
+export default function CustomButton({
+  buttonText = "입력해주세요",
+  mode,
+  onPress,
+}) {
   return (
     <Button
       mode={mode === "contained" ? "contained" : "outlined"}
-      onPress={() => console.log("Pressed")}
+      onPress={onPress ? onPress : () => {}}
       buttonColor={mode === "contained" ? color.BtnPrimary : "white"}
       style={styles.buttonStyle}
       labelStyle={[
