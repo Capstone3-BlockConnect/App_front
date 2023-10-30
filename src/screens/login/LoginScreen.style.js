@@ -1,4 +1,9 @@
-import { Button, Text, TextInput } from "react-native-paper";
+import {
+  Button,
+  Text,
+  TextInput,
+  KeyboardAvoidingView,
+} from "react-native-paper";
 import styled from "styled-components";
 
 export const ScreenContainer = styled.View`

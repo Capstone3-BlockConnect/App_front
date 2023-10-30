@@ -16,11 +16,34 @@ import {
 } from "react-native-paper";
 import { Colors } from "../../../assets/Colors";
 import CustomButton from "../../components/buttons/CustomButton";
+import { loginPost } from "../../api/loginApi";
+import { userAtom } from "../../store/LoginState";
+import { useAtom } from "jotai";
+import { useNavigation } from "@react-navigation/native";
 
-export default function LoginScreen() {
+export default function LoginScreen({ navigation }) {
   const [userInfo, setUserInfo] = useState({});
+  const [user, setUser] = useAtom(userAtom);
 
-  useEffect(() => {}, [userInfo]);
+  const loginSubmit = async (id, pw) => {
+    console.log({ id: id, pw: pw });
+    try {
+      const response = await loginPost({ id: id, pw: pw });
+      console.log(response);
+      setUser({
+        loggedIn: true,
+        token: response.token,
+        userData: response.user,
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  };
+  useEffect(() => {
+    if (user.loggedIn) {
+      navigation.navigate("서비스 소개");
+    }
+  }, [user]);
 
   return (
     <ScreenContainer>
@@ -47,7 +70,13 @@ export default function LoginScreen() {
           }}
         />
 
-        <CustomButton buttonText="Login" mode="contained" />
+        <CustomButton
+          buttonText="Login"
+          mode="contained"
+          onPress={() => {
+            loginSubmit(userInfo.id, userInfo.pw);
+          }}
+        />
       </LoginBox>
 
       <LoginBox style={styles.LoginBoxLower}>
@@ -70,6 +99,7 @@ export default function LoginScreen() {
                   fontWeight: "bold",
                   color: "black",
                 }}
+                onPress={() => {}}
               >
                 Twitter
               </Button>
