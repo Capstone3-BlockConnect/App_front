@@ -9,6 +9,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import LoginScreen from "../screens/login/LoginScreen";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import SignIn from "../screens/login/SignIn";
 
 // ----- [ Tabs ] ------
 const Tab = createBottomTabNavigator();
@@ -62,6 +63,7 @@ const HomeTabScreens = () => {
     <HomeStack.Navigator>
       <HomeStack.Screen name="로그인" component={LoginScreen} />
       <HomeStack.Screen name="서비스 소개" component={HomeScreen} />
+      <HomeStack.Screen name="회원가입" component={SignIn} />
     </HomeStack.Navigator>
   );
 };

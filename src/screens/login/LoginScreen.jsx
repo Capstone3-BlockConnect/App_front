@@ -123,6 +123,9 @@ export default function LoginScreen({ navigation }) {
                 borderRadius: 10,
               }}
               labelStyle={{ fontSize: 20 }}
+              onPress={() => {
+                navigation.navigate("회원가입");
+              }}
             >
               회원가입
             </Button>
