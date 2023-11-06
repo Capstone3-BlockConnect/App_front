@@ -21,9 +21,10 @@ import { userAtom } from "../../store/LoginState";
 import { useAtom } from "jotai";
 import { useNavigation } from "@react-navigation/native";
 
-export default function LoginScreen({ navigation }) {
+export default function LoginScreen() {
   const [userInfo, setUserInfo] = useState({});
   const [user, setUser] = useAtom(userAtom);
+  const navigation = useNavigation();
 
   const loginSubmit = async (id, pw) => {
     console.log({ id: id, pw: pw });

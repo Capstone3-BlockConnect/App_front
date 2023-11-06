@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, ScrollView } from "react-native";
 import { Button, Checkbox, Dialog, Portal } from "react-native-paper";
 import { color } from "../../../assets/colors/color";
 
-export default function SignIn() {
+export default function SignIn({ navigation }) {
   const [checked, setChecked] = useState(false);
   const [visible, setVisible] = useState(false);
   const hideDialog = () => setVisible(false);
@@ -91,7 +91,9 @@ export default function SignIn() {
           </Button>
           <Button
             mode="contained"
-            onPress={() => {}}
+            onPress={() => {
+              navigation.navigate("정보입력");
+            }}
             style={{
               borderRadius: 10,
               backgroundColor: color.BtnPrimary,
