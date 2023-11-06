@@ -14,3 +14,25 @@ export const loginPost = async ({ id: id, pw: pw }) => {
 
   return response.data;
 };
+
+export const submitSignIn = async ({
+  userId,
+  password,
+  nickname,
+  gender,
+  age,
+  phoneNumber,
+  foodCategory,
+}) => {
+  const url = `/users/signup`;
+  const response = await baseapi.post(url, {
+    userId: userId,
+    password: password,
+    nickname: nickname,
+    gender: gender,
+    age: age,
+    phoneNumber: phoneNumber,
+    foodCategory: foodCategory,
+  });
+  return response.data;
+};
