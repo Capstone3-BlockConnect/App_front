@@ -83,7 +83,11 @@ const ApplyTabScreens = () => {
 const ProfileTabScreens = () => {
   return (
     <ProfileStack.Navigator>
-      <ProfileStack.Screen name="main" component={ProfileScreen} />
+      <ProfileStack.Screen
+        name="main"
+        options={{ title: "프로필" }}
+        component={ProfileScreen}
+      />
     </ProfileStack.Navigator>
   );
 };
