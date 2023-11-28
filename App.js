@@ -1,14 +1,14 @@
 import React from "react";
 import { Provider as PaperProvider } from "react-native-paper";
-import { Provider } from "jotai";
 import RootStack from "./src/navigation/Rootstack";
+import { RecoilRoot } from "recoil";
 
 export default function App() {
   return (
-    <Provider>
+    <RecoilRoot>
       <PaperProvider>
         <RootStack />
       </PaperProvider>
-    </Provider>
+    </RecoilRoot>
   );
 }
