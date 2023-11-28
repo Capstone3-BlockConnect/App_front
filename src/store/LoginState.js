@@ -1,7 +1,21 @@
-import { atom } from "jotai";
+import { atom } from "recoil";
 
-export const userAtom = atom({
-  loggedIn: false,
-  token: null,
-  userData: null,
+export const loginState = atom({
+  key: "loginState",
+  default: {
+    isLogined: false,
+    token: "",
+  },
+});
+
+export const userState = atom({
+  key: "userState",
+  default: {
+    userId: "",
+    nickName: "",
+    gender: "",
+    age: 0,
+    phoneNumber: "",
+    foodCategory: "",
+  },
 });
