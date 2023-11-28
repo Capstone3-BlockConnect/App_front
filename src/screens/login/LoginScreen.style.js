@@ -1,10 +1,5 @@
-import {
-  Button,
-  Text,
-  TextInput,
-  KeyboardAvoidingView,
-} from "react-native-paper";
-import styled from "styled-components";
+import { Button, Text, TextInput } from "react-native-paper";
+import styled from "@emotion/native";
 
 export const ScreenContainer = styled.View`
   flex: 1;
