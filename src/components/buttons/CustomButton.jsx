@@ -13,6 +13,7 @@ export default function CustomButton({
   buttonText = "입력해주세요",
   mode,
   onPress,
+  width,
 }) {
   return (
     <Button
