@@ -12,6 +12,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import SignIn from "../screens/login/SignIn";
 import SignInForm from "../screens/login/SignInForm";
 import SignInFinish from "../screens/login/SignInFinish";
+import WalletScreen from "../screens/profile/wallet/WalletScreen";
 
 // ----- [ Tabs ] ------
 const Tab = createBottomTabNavigator();
@@ -87,6 +88,11 @@ const ProfileTabScreens = () => {
         name="main"
         options={{ title: "프로필" }}
         component={ProfileScreen}
+      />
+      <ProfileStack.Screen
+        name="wallet"
+        options={{ title: "내 지갑" }}
+        component={WalletScreen}
       />
     </ProfileStack.Navigator>
   );
