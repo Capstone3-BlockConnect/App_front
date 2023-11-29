@@ -5,7 +5,7 @@ import {
   LoginTitle,
   ScreenContainer,
 } from "./LoginScreen.style";
-import { StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import { Button, Text, TextInput } from "react-native-paper";
 import { Colors } from "../../../assets/Colors";
 import CustomButton from "../../components/buttons/CustomButton";
@@ -22,11 +22,6 @@ export default function LoginScreen() {
   const [info, setInfo] = useRecoilState(userState);
   const [logined, setLogined] = useRecoilState(loginState);
 
-  useEffect(() => {
-    if (logined.isLogined) {
-      navigation.navigate("서비스 소개");
-    }
-  }, [logined.isLogined]);
   // 로그인 이후에 하는 것들
   // 1. 기기에 token 저장
   // 2. 전역 변수 업데이트
@@ -53,20 +48,29 @@ export default function LoginScreen() {
 
   const loginSubmit = async (id, pw) => {
     const response = await loginPost({ id: id, pw: pw });
+    const status = response.status;
+    const data = response.data;
     const storageResponse = await setStorage({
       asyncKey: "token",
-      data: response?.token,
+      data: data?.token,
     });
+    if (status === 200) {
+      console.log(status);
+      afterLogined({
+        token: data?.token,
+        userId: data?.user,
+        age: data?.age,
+        foodCategory: data?.foodCategory,
+        gender: data?.gender,
+        nickName: data?.nickName,
+        phoneNumber: data?.phoneNumber,
+      });
 
-    afterLogined({
-      token: response?.token,
-      userId: response?.user,
-      age: response?.age,
-      foodCategory: response?.foodCategory,
-      gender: response?.gender,
-      nickName: response?.nickName,
-      phoneNumber: response?.phoneNumber,
-    });
+      return true;
+    } else {
+      Alert.alert("해당 계정이 존재하지 않습니다.");
+      return false;
+    }
   };
 
   return (
@@ -98,7 +102,16 @@ export default function LoginScreen() {
           buttonText="Login"
           mode="contained"
           onPress={() => {
-            loginSubmit(userInfo.id, userInfo.pw);
+            const login = async () => {
+              const response = await loginSubmit(userInfo.id, userInfo.pw);
+              if (response) {
+                navigation.navigate("서비스 소개");
+              } else {
+                Alert.alert("계정 정보가 존재하지 않아요.");
+              }
+            };
+
+            login();
           }}
         />
       </LoginBox>
