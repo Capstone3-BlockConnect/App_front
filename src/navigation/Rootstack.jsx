@@ -24,14 +24,19 @@ const ProfileStack = createNativeStackNavigator();
 const Rootstack = () => {
   return (
     <NavigationContainer>
-      <Tab.Navigator screenOptions={{ headerShown: false }}>
+      <Tab.Navigator
+        screenOptions={{
+          headerShown: false,
+          tabBarActiveTintColor: "gray", // 활성 탭의 아이콘 색상을 빨간색으로 설정
+          tabBarInactiveTintColor: "white",
+        }}
+      >
         <Tab.Screen
           name="Home"
           component={HomeTabScreens}
           options={{
-            tabBarIcon: () => (
-              <MaterialCommunityIcons name="home" size={32} color="green" />
-            ),
+            tabBarIcon: () => <MaterialCommunityIcons name="home" size={32} />,
+            tabBarActiveBackgroundColor: "#72727220",
           }}
         />
         <Tab.Screen
@@ -39,21 +44,18 @@ const Rootstack = () => {
           component={ApplyTabScreens}
           options={{
             tabBarIcon: () => (
-              <MaterialCommunityIcons
-                name="handshake"
-                size={32}
-                color="green"
-              />
+              <MaterialCommunityIcons name="handshake" size={32} />
             ),
+
+            tabBarActiveBackgroundColor: "#72727220",
           }}
         />
         <Tab.Screen
           name="Profile"
           component={ProfileTabScreens}
           options={{
-            tabBarIcon: () => (
-              <Ionicons name="person-circle" size={32} color="green" />
-            ),
+            tabBarIcon: () => <Ionicons name="person-circle" size={32} />,
+            tabBarActiveBackgroundColor: "#72727220",
           }}
         />
       </Tab.Navigator>
