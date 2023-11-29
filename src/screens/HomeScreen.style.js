@@ -8,7 +8,7 @@ export const ContainerView = styled.View`
 
 export const IntroduceBoxView = styled.View`
   width: 100%;
-  row-gap: 20;
+  row-gap: 20px;
   align-items: center;
 `;
 

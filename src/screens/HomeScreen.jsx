@@ -31,7 +31,7 @@ export default function HomeScreen() {
         style={css`
           align-items: center;
           width: 85%;
-          row-gap: 10;
+          row-gap: 10px;
           margin-top: 20;
         `}
       >
