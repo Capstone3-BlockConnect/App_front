@@ -13,6 +13,7 @@ import SignIn from "../screens/login/SignIn";
 import SignInForm from "../screens/login/SignInForm";
 import SignInFinish from "../screens/login/SignInFinish";
 import WalletScreen from "../screens/profile/wallet/WalletScreen";
+import MyInfoScreen from "../screens/profile/myInfo/MyInfoScreen";
 
 // ----- [ Tabs ] ------
 const Tab = createBottomTabNavigator();
@@ -95,6 +96,11 @@ const ProfileTabScreens = () => {
         name="wallet"
         options={{ title: "내 지갑" }}
         component={WalletScreen}
+      />
+      <ProfileStack.Screen
+        name="myInfo"
+        options={{ title: "내 프로필 정보" }}
+        component={MyInfoScreen}
       />
     </ProfileStack.Navigator>
   );

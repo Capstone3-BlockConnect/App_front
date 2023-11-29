@@ -47,7 +47,7 @@ export const WalletMenu = styled.View`
   margin-top: 20px;
 `;
 
-export const WalletItem = styled.View`
+export const WalletItem = styled.Pressable`
   border-bottom-width: 1px;
   border-bottom-color: #cbcbcb;
   border-bottom-style: double;

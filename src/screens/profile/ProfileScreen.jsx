@@ -1,7 +1,6 @@
 import React from "react";
 import * as styles from "./ProfileScreen.style";
 import { useNavigation } from "@react-navigation/native";
-import { View } from "react-native";
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
@@ -24,7 +23,13 @@ const ProfileScreen = () => {
         </styles.WalletBalanceLabel>
       </styles.WalletBox>
       <styles.WalletMenu>
-        <styles.WalletItem>
+        <styles.WalletItem
+          onPress={() => {
+            // 내 프로필로 이동
+            navigation.navigate("myInfo");
+            console.log("dd");
+          }}
+        >
           <styles.WalletItemLabel>내 프로필</styles.WalletItemLabel>
         </styles.WalletItem>
         <styles.WalletItem>
