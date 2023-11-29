@@ -7,7 +7,7 @@ export const ContainerView = styled.View`
   padding-top: 10px;
 `;
 
-export const WalletBox = styled.View`
+export const WalletBox = styled.Pressable`
   border: 1px solid black;
   width: 90%;
 
@@ -61,5 +61,3 @@ export const WalletItemLabel = styled.Text`
   font-size: 20px;
   font-weight: 800;
 `;
-
-
