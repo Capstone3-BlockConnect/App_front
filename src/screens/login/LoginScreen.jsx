@@ -1,49 +1,73 @@
 import { useEffect, useState } from "react";
 import {
   LoginBox,
-  LoginButton,
   LoginInput,
   LoginTitle,
   ScreenContainer,
 } from "./LoginScreen.style";
 import { StyleSheet, View } from "react-native";
-import {
-  Button,
-  IconButton,
-  Surface,
-  Text,
-  TextInput,
-} from "react-native-paper";
+import { Button, Text, TextInput } from "react-native-paper";
 import { Colors } from "../../../assets/Colors";
 import CustomButton from "../../components/buttons/CustomButton";
 import { loginPost } from "../../api/loginApi";
-import { userAtom } from "../../store/LoginState";
-import { useAtom } from "jotai";
 import { useNavigation } from "@react-navigation/native";
+import { useRecoilState } from "recoil";
+import { loginState, userState } from "../../store/LoginState";
+import { setStorage } from "../../asyncStorage/asyncStorage";
 
-export default function LoginScreen({ navigation }) {
+export default function LoginScreen() {
   const [userInfo, setUserInfo] = useState({});
-  const [user, setUser] = useAtom(userAtom);
+  const navigation = useNavigation();
 
-  const loginSubmit = async (id, pw) => {
-    console.log({ id: id, pw: pw });
-    try {
-      const response = await loginPost({ id: id, pw: pw });
-      console.log(response);
-      setUser({
-        loggedIn: true,
-        token: response.token,
-        userData: response.user,
-      });
-    } catch (e) {
-      console.error(e);
-    }
-  };
+  const [info, setInfo] = useRecoilState(userState);
+  const [logined, setLogined] = useRecoilState(loginState);
+
   useEffect(() => {
-    if (user.loggedIn) {
+    if (logined.isLogined) {
       navigation.navigate("서비스 소개");
     }
-  }, [user]);
+  }, [logined.isLogined]);
+  // 로그인 이후에 하는 것들
+  // 1. 기기에 token 저장
+  // 2. 전역 변수 업데이트
+  const afterLogined = ({
+    token,
+    userId,
+    nickName,
+    gender,
+    age,
+    phoneNumber,
+    foodCategory,
+  }) => {
+    setLogined({ isLogined: true, token: token });
+
+    setInfo({
+      userId: userId,
+      nickName: nickName,
+      age: age,
+      foodCategory: foodCategory,
+      gender: gender,
+      phoneNumber: phoneNumber,
+    });
+  };
+
+  const loginSubmit = async (id, pw) => {
+    const response = await loginPost({ id: id, pw: pw });
+    const storageResponse = await setStorage({
+      asyncKey: "token",
+      data: response?.token,
+    });
+
+    afterLogined({
+      token: response?.token,
+      userId: response?.user,
+      age: response?.age,
+      foodCategory: response?.foodCategory,
+      gender: response?.gender,
+      nickName: response?.nickName,
+      phoneNumber: response?.phoneNumber,
+    });
+  };
 
   return (
     <ScreenContainer>
@@ -123,6 +147,9 @@ export default function LoginScreen({ navigation }) {
                 borderRadius: 10,
               }}
               labelStyle={{ fontSize: 20 }}
+              onPress={() => {
+                navigation.navigate("회원가입");
+              }}
             >
               회원가입
             </Button>

@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, View, Image } from "react-native";
+import styled, { css } from "@emotion/native";
 import {
   ContainerView,
   IntroduceBoxView,
@@ -17,21 +18,22 @@ export default function HomeScreen() {
     headerLeft: () => null,
     gestureEnabled: false,
   });
+
   return (
     <ContainerView>
       <IntroduceBoxView>
         <WordBalloon text="숭밥약이 뭐야?" />
-        <WordAnswerBalloon text="숭밥약은 숭실밥집의 스핀오프 프로젝트야!\n밥을 매개로 사람들을 이어보려고 시작했어" />
+        <WordAnswerBalloon text="숭밥약은 숭실밥집의 스핀오프 프로젝트야!밥을 매개로 사람들을 이어보려고 시작했어" />
         <WordBalloon text="어떻게 사용하면 돼?" />
         <WordAnswerBalloon text="매일 23:59에 매칭된 밥 메이트의 대략적인 정보를 알려줘 그리고 밥 미팅을 위해서 가게에 방문하면 쿠폰을 사용해서 혜택을 받을 수 있어" />
       </IntroduceBoxView>
       <View
-        style={{
-          alignItems: "center",
-          width: "85%",
-          rowGap: 10,
-          marginTop: 20,
-        }}
+        style={css`
+          align-items: center;
+          width: 85%;
+          row-gap: 10;
+          margin-top: 20;
+        `}
       >
         <LoginBtnBox>
           <Button
