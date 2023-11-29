@@ -1,13 +1,19 @@
-import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { Text, View, Keyboard } from "react-native";
-import styled, { css } from "styled-components";
 import * as styles from "./ProfileScreen.style";
-import CustomButton from "../../components/buttons/CustomButton";
+import { useNavigation } from "@react-navigation/native";
+import { View } from "react-native";
+
 const ProfileScreen = () => {
+  const navigation = useNavigation();
+
   return (
     <styles.ContainerView>
-      <styles.WalletBox>
+      <styles.WalletBox
+        onPress={() => {
+          // 지갑으로 이동
+          navigation.navigate("wallet");
+        }}
+      >
         <styles.TitleWrapper>
           <styles.WalletTitle>내 지갑</styles.WalletTitle>
           <styles.WalletTitle>아이콘</styles.WalletTitle>
