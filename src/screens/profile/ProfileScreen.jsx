@@ -27,7 +27,6 @@ const ProfileScreen = () => {
           onPress={() => {
             // 내 프로필로 이동
             navigation.navigate("myInfo");
-            console.log("dd");
           }}
         >
           <styles.WalletItemLabel>내 프로필</styles.WalletItemLabel>
