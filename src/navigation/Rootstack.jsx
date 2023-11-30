@@ -14,6 +14,7 @@ import SignInForm from "../screens/login/SignInForm";
 import SignInFinish from "../screens/login/SignInFinish";
 import WalletScreen from "../screens/profile/wallet/WalletScreen";
 import MyInfoScreen from "../screens/profile/myInfo/MyInfoScreen";
+import ChatManageScreen from "../screens/profile/chatlink/ChatManageScreen";
 
 // ----- [ Tabs ] ------
 const Tab = createBottomTabNavigator();
@@ -101,6 +102,11 @@ const ProfileTabScreens = () => {
         name="myInfo"
         options={{ title: "내 프로필 정보" }}
         component={MyInfoScreen}
+      />
+      <ProfileStack.Screen
+        name="chatManage"
+        options={{ title: "내 채팅링크 관리하기" }}
+        component={ChatManageScreen}
       />
     </ProfileStack.Navigator>
   );
