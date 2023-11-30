@@ -37,6 +37,13 @@ const ProfileScreen = () => {
         <styles.WalletItem>
           <styles.WalletItemLabel>버전</styles.WalletItemLabel>
         </styles.WalletItem>
+        <styles.WalletItem
+          onPress={() => {
+            navigation.navigate("chatManage");
+          }}
+        >
+          <styles.WalletItemLabel>내 채팅링크 관리</styles.WalletItemLabel>
+        </styles.WalletItem>
       </styles.WalletMenu>
     </styles.ContainerView>
   );
