@@ -17,5 +17,6 @@ export const userState = atom({
     age: 0,
     phoneNumber: "",
     foodCategory: "",
+    chatLink: "",
   },
 });
