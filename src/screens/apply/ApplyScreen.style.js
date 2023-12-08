@@ -1,6 +1,8 @@
 import styled from "@emotion/native";
 import { Button } from "react-native-paper";
 
+// ------ Container Level ------
+
 export const Container = styled.View`
   flex: 1 1 100%;
   background-color: white;
@@ -10,7 +12,7 @@ export const Container = styled.View`
   row-gap: 20px;
 `;
 
-//
+// ------ Area Level ------
 
 export const UpperArea = styled.View``;
 
@@ -18,7 +20,8 @@ export const ContentArea = styled.View`
   row-gap: 11px;
 `;
 
-//
+// ------ Box Level ------
+
 export const InfoBox = styled.Pressable`
   padding: 20px 16px;
   border-radius: 8px;
@@ -56,6 +59,8 @@ export const ButtonContainer = styled.View`
   column-gap: 10px;
 `;
 
+// ------ Elements Level ------
+
 export const BoldContent = styled.Text`
   font-weight: 700;
 `;
@@ -81,7 +86,8 @@ export const ApplyButton = styled(Button)`
   padding: 1px 0px;
 `;
 
-// re-use Text Component
+// ------ Re-use Elements Level ------
+
 export const MateBoldContent = styled(BoldContent)`
   font-size: 32px;
 `;
@@ -96,6 +102,11 @@ export const InputBoxContent = styled(BoldContent)`
 
 export const MemoBoldContent = styled(BoldContent)`
   font-size: 15px;
+`;
+
+export const LoginContent = styled(BoldContent)`
+  font-size: 15px;
+  color: black;
 `;
 
 // re-use Box Component
@@ -115,6 +126,15 @@ export const MemoBox = styled(InfoBox)`
 export const MateBox = styled(InfoBox)`
   background-color: #e5f0db;
   border: 1px solid black;
+`;
+
+export const LoginBox = styled.View`
+  flex: 1;
+  align-items: flex-start;
+
+  border: 1px solid black;
+  padding: 20px;
+  border-radius: 10px;
 `;
 
 //
