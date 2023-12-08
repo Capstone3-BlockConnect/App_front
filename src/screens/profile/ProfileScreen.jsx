@@ -1,23 +1,36 @@
 import React from "react";
 import * as styles from "./ProfileScreen.style";
 import { useNavigation } from "@react-navigation/native";
+import { useRecoilValue } from "recoil";
+import { loginState } from "../../store/LoginState";
+import { Alert } from "react-native";
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
+  const { isLogined } = useRecoilValue(loginState);
 
   return (
     <styles.ContainerView>
       <styles.WalletBox
         onPress={() => {
           // 지갑으로 이동
-          navigation.navigate("wallet");
+          if (isLogined) navigation.navigate("wallet");
+          else
+            Alert.alert("알려드립니다", "로그인해주세요", [
+              { text: "확인", onPress: () => console.log("확인됨") },
+            ]);
         }}
       >
         <styles.TitleWrapper>
           <styles.WalletTitle>내 지갑</styles.WalletTitle>
           <styles.WalletTitle>아이콘</styles.WalletTitle>
         </styles.TitleWrapper>
-        <styles.WalletBalance>1320 Point</styles.WalletBalance>
+        {isLogined ? (
+          <styles.WalletBalance>1320 Point</styles.WalletBalance>
+        ) : (
+          <styles.WalletBalance>로그인해주세요</styles.WalletBalance>
+        )}
+
         <styles.WalletBalanceLabel>
           내 활동보상 포인트
         </styles.WalletBalanceLabel>
@@ -26,23 +39,40 @@ const ProfileScreen = () => {
         <styles.WalletItem
           onPress={() => {
             // 내 프로필로 이동
-            navigation.navigate("myInfo");
+            if (isLogined) navigation.navigate("myInfo");
+            else
+              Alert.alert("알려드립니다", "로그인해주세요", [
+                { text: "확인", onPress: () => console.log("확인됨") },
+              ]);
           }}
         >
           <styles.WalletItemLabel>내 프로필</styles.WalletItemLabel>
         </styles.WalletItem>
-        <styles.WalletItem>
-          <styles.WalletItemLabel>매칭기록</styles.WalletItemLabel>
-        </styles.WalletItem>
-        <styles.WalletItem>
-          <styles.WalletItemLabel>버전</styles.WalletItemLabel>
-        </styles.WalletItem>
         <styles.WalletItem
           onPress={() => {
-            navigation.navigate("chatManage");
+            if (isLogined) navigation.navigate("chatManage");
+            else
+              Alert.alert("알려드립니다", "로그인해주세요", [
+                { text: "확인", onPress: () => console.log("확인됨") },
+              ]);
+          }}
+        >
+          <styles.WalletItemLabel>매칭기록</styles.WalletItemLabel>
+        </styles.WalletItem>
+
+        <styles.WalletItem
+          onPress={() => {
+            if (isLogined) navigation.navigate("chatManage");
+            else
+              Alert.alert("알려드립니다", "로그인해주세요", [
+                { text: "확인", onPress: () => console.log("확인됨") },
+              ]);
           }}
         >
           <styles.WalletItemLabel>내 채팅링크 관리</styles.WalletItemLabel>
+        </styles.WalletItem>
+        <styles.WalletItem>
+          <styles.WalletItemLabel>버전 및 개발</styles.WalletItemLabel>
         </styles.WalletItem>
       </styles.WalletMenu>
     </styles.ContainerView>
