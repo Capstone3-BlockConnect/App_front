@@ -14,7 +14,7 @@ const NotifyWithTime = ({
         <ContentText>{contentText}</ContentText>
       </TextBox>
       <LightBox>
-        <Light />
+        <Light color={lightColor} />
       </LightBox>
     </Container>
   );
