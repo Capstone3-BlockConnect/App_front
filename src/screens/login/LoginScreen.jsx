@@ -13,12 +13,12 @@ import { loginPost } from "../../api/loginApi";
 import { useNavigation } from "@react-navigation/native";
 import { useRecoilState } from "recoil";
 import { loginState, userState } from "../../store/LoginState";
-import { setStorage } from "../../asyncStorage/asyncStorage";
+import { getStorageData, setStorage } from "../../asyncStorage/asyncStorage";
 
 export default function LoginScreen() {
   const [userInfo, setUserInfo] = useState({});
   const navigation = useNavigation();
-
+  const [passwordSecured, setPasswordSecured] = useState(false);
   const [info, setInfo] = useRecoilState(userState);
   const [logined, setLogined] = useRecoilState(loginState);
 
@@ -50,12 +50,13 @@ export default function LoginScreen() {
     const response = await loginPost({ id: id, pw: pw });
     const status = response.status;
     const data = response.data;
+
     const storageResponse = await setStorage({
       asyncKey: "token",
       data: data?.token,
     });
+
     if (status === 200) {
-      console.log(status);
       afterLogined({
         token: data?.token,
         userId: data?.user,
@@ -91,8 +92,15 @@ export default function LoginScreen() {
           mode="outlined"
           placeholder="비밀번호를 입력해주세요"
           value={userInfo.pw}
-          secureTextEntry
-          right={<TextInput.Icon icon="eye" />}
+          secureTextEntry={!passwordSecured}
+          right={
+            <TextInput.Icon
+              icon="eye"
+              onPress={() => {
+                setPasswordSecured(!passwordSecured);
+              }}
+            />
+          }
           onChangeText={(pw) => {
             setUserInfo({ ...userInfo, pw: pw });
           }}
@@ -136,7 +144,9 @@ export default function LoginScreen() {
                   fontWeight: "bold",
                   color: "black",
                 }}
-                onPress={() => {}}
+                onPress={() =>
+                  navigation.navigate("Apply", { screen: "매칭결과 확인하기" })
+                }
               >
                 Twitter
               </Button>
