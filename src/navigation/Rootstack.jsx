@@ -15,6 +15,9 @@ import SignInFinish from "../screens/login/SignInFinish";
 import WalletScreen from "../screens/profile/wallet/WalletScreen";
 import MyInfoScreen from "../screens/profile/myInfo/MyInfoScreen";
 import ChatManageScreen from "../screens/profile/chatlink/ChatManageScreen";
+import NotifyScreen from "../screens/apply/notify/NotifyScreen";
+import ResultScreen from "../screens/apply/result/ResultScreen";
+import CompleteScreen from "../screens/apply/complete/CompleteScreen";
 
 // ----- [ Tabs ] ------
 const Tab = createBottomTabNavigator();
@@ -80,7 +83,10 @@ const HomeTabScreens = () => {
 const ApplyTabScreens = () => {
   return (
     <ApplyStack.Navigator>
-      <ApplyStack.Screen name="main" component={ApplyScreen} />
+      <ApplyStack.Screen name="매칭 신청하기" component={ApplyScreen} />
+      <ApplyStack.Screen name="신청정보 확인하기" component={NotifyScreen} />
+      <ApplyStack.Screen name="매칭결과 확인하기" component={ResultScreen} />
+      <ApplyStack.Screen name="밥 메이트 연결완료" component={CompleteScreen} />
     </ApplyStack.Navigator>
   );
 };
