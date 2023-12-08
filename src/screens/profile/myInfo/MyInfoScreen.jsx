@@ -3,7 +3,7 @@ import { useRecoilValue } from "recoil";
 import { userState } from "../../../store/LoginState";
 import * as styles from "./MyInfoScreen.style";
 import { Button } from "react-native-paper";
-import { css } from "@emotion/react";
+import { css } from "@emotion/native";
 const MyInfoScreen = () => {
   const userInfo = useRecoilValue(userState);
 
@@ -74,7 +74,11 @@ const MyInfoScreen = () => {
         <Button
           mode="contained"
           buttonColor="#272643"
-          style={{ borderRadius: 10, marginTop: 30, padding: 5 }}
+          style={css`
+            border-radius: 10px;
+            margin-top: 30px;
+            padding: 5px;
+          `}
           labelStyle={{ fontSize: 17, fontWeight: 900, letterSpacing: 1 }}
         >
           매칭 신청하기
