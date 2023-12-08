@@ -1,13 +1,27 @@
 import * as styles from "./CompleteScreen.style";
 import * as profileStyle from "../../profile/myInfo/MyInfoScreen.style";
 import { css } from "@emotion/native";
+import CustomModal from "../../../components/modal/CustomModal";
+import { useState } from "react";
+import ChatLinkModal from "./ChatLinkModal";
 const CompleteScreen = () => {
+  const [modalVisible, setModalVisible] = useState(false);
+
   return (
     <styles.Container
       contentContainerStyle={css`
         row-gap: 25px;
       `}
     >
+      <CustomModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+      >
+        <ChatLinkModal
+          chatLink="http:www.suwon"
+          setModalVisible={setModalVisible}
+        />
+      </CustomModal>
       <styles.MatchingInfoArea>
         <styles.AreaLabel>임기현 님의 10월 12일 매칭정보</styles.AreaLabel>
 
@@ -106,6 +120,7 @@ const CompleteScreen = () => {
           </styles.Notify>
         </styles.NotifyTextBoxWrapper>
       </styles.OpenChatArea>
+
       <styles.ButtonArea>
         <styles.ConnectButton
           mode="contained"
@@ -114,7 +129,10 @@ const CompleteScreen = () => {
             font-weight: 900;
             color: white;
           `}
-          onPress={() => {}}
+          onPress={() => {
+            setModalVisible(true);
+            console.log(modalVisible);
+          }}
         >
           채팅링크 확인하기
         </styles.ConnectButton>
