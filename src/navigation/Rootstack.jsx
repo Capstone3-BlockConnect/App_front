@@ -18,6 +18,8 @@ import ChatManageScreen from "../screens/profile/chatlink/ChatManageScreen";
 import NotifyScreen from "../screens/apply/notify/NotifyScreen";
 import ResultScreen from "../screens/apply/result/ResultScreen";
 import CompleteScreen from "../screens/apply/complete/CompleteScreen";
+import { useRecoilValue } from "recoil";
+import { loginState } from "../store/LoginState";
 
 // ----- [ Tabs ] ------
 const Tab = createBottomTabNavigator();
@@ -27,6 +29,7 @@ const ApplyStack = createNativeStackNavigator();
 const ProfileStack = createNativeStackNavigator();
 
 const Rootstack = () => {
+  const { isLogined } = useRecoilValue(loginState);
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -43,6 +46,18 @@ const Rootstack = () => {
             tabBarIcon: () => <MaterialCommunityIcons name="home" size={32} />,
             tabBarActiveBackgroundColor: "#72727220",
           }}
+          listeners={({ navigation }) => ({
+            tabPress: (e) => {
+              // 로그인 상태가 아니라면 기본 동작을 방지하고 로그인 스크린으로 리디렉션
+              if (!isLogined) {
+                e.preventDefault();
+                navigation.navigate("로그인");
+              } else {
+                e.preventDefault();
+                navigation.navigate("서비스 소개");
+              }
+            },
+          })}
         />
         <Tab.Screen
           name="Apply"
