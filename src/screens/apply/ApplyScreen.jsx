@@ -5,6 +5,7 @@ import { useRecoilValue } from "recoil";
 import { loginState } from "../../store/LoginState";
 import InputBox from "./component/InputBox";
 import AnimatedLottieView from "lottie-react-native";
+import AnimatedCounter from "../../components/atom/AnimatedNumber";
 
 export default function ApplyScreen() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -14,7 +15,7 @@ export default function ApplyScreen() {
     <styles.Container>
       <styles.UpperArea>
         <styles.MateBox>
-          <styles.MateBoldContent>11000명</styles.MateBoldContent>
+          <AnimatedCounter duration={1000} targetValue={10000} />
           <styles.Title>지금까지 매칭된 누적 메이트</styles.Title>
         </styles.MateBox>
       </styles.UpperArea>
