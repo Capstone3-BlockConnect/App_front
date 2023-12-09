@@ -99,7 +99,7 @@ export const RightBigArea = styled.View`
   justify-content: space-between;
 `;
 
-export const LeftButton = styled.View`
+export const LeftButton = styled.Pressable`
   background-color: #bae8e8;
 
   width: 100%;
@@ -112,7 +112,7 @@ export const LeftButton = styled.View`
   border-radius: 10px;
 `;
 
-export const RightUpperButton = styled.View`
+export const RightUpperButton = styled.Pressable`
   width: 100%;
   height: 45%;
 

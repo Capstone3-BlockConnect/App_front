@@ -2,13 +2,36 @@ import * as styles from "./ChatManageScreen.style";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../../store/LoginState";
 import { css } from "@emotion/native";
-import { Button } from "react-native-paper";
+import { Button, TextInput } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
+import { useState } from "react";
+import { Linking } from "react-native";
 
 const ChatManageScreen = () => {
+  const [isModifying, setIsModifying] = useState(false);
+  const [openChatLink, setOpenChatLink] = useState("");
   const info = useRecoilValue(userState);
-
+  const navigation = useNavigation();
   const { age, foodCategory, gender, nickName, phoneNumber, userId, chatLink } =
     info;
+
+  const openURL = (url) => {
+    Linking.canOpenURL(url).then((supported) => {
+      if (supported) {
+        Linking.openURL(url);
+      } else {
+        console.log("CANNOT OPEN URL");
+      }
+    });
+  };
+
+  const ModifyButtonHandler = async () => {
+    if (isModifying) {
+      setIsModifying(false);
+    } else {
+      setIsModifying(true);
+    }
+  };
   return (
     <styles.Container>
       <styles.RedCircle />
@@ -31,9 +54,24 @@ const ChatManageScreen = () => {
             <styles.WordBoxTitle>
               현재 표시되고 있는 채팅링크
             </styles.WordBoxTitle>
-            <styles.WordLinkText ellipsizeMode="tail">
-              {chatLink || "http://www.kakao.difjoewfjewiofj"}
-            </styles.WordLinkText>
+            {isModifying ? (
+              <TextInput
+                textColor="black"
+                placeholder="오픈카톡링크를 올려주세요"
+                style={css`
+                  background-color: white;
+                  font-size: 12px;
+                `}
+                value={openChatLink}
+                onChangeText={(text) => {
+                  setOpenChatLink(text);
+                }}
+              />
+            ) : (
+              <styles.WordLinkText ellipsizeMode="tail">
+                {openChatLink || "채팅링크가 존재하지 않습니다."}
+              </styles.WordLinkText>
+            )}
           </styles.WordBox>
           <Button
             mode="contained"
@@ -46,8 +84,9 @@ const ChatManageScreen = () => {
               font-size: 14px;
               font-weight: 900;
             `}
+            onPress={ModifyButtonHandler}
           >
-            채팅링크 변경하기
+            {isModifying ? "완료" : "채팅링크 변경하기"}
           </Button>
         </styles.LinkCard>
         {/*
@@ -55,12 +94,20 @@ const ChatManageScreen = () => {
         */}
         <styles.ButtonBox>
           <styles.LeftBigArea>
-            <styles.LeftButton>
+            <styles.LeftButton
+              onPress={() => {
+                openURL(openChatLink);
+              }}
+            >
               <styles.ButtonText>링크로 들어가기</styles.ButtonText>
             </styles.LeftButton>
           </styles.LeftBigArea>
           <styles.RightBigArea>
-            <styles.RightUpperButton>
+            <styles.RightUpperButton
+              onPress={() => {
+                navigation.navigate("myInfo");
+              }}
+            >
               <styles.ButtonText>내 프로필 보러가기</styles.ButtonText>
             </styles.RightUpperButton>
             <styles.RightLowerButton>
