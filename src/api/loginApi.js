@@ -22,7 +22,6 @@ export const loginPost = async ({ id, pw }) => {
     }
   } catch (e) {
     return e.response;
-
   }
 };
 
@@ -38,7 +37,7 @@ export const submitSignIn = async ({
 }) => {
   try {
     const url = `/users/signup`;
-    const response = await baseApi.post(url, {
+    const response = await apiBase.post(url, {
       userId: userId,
       password: password,
       nickname: nickname,
