@@ -20,6 +20,8 @@ import ResultScreen from "../screens/apply/result/ResultScreen";
 import CompleteScreen from "../screens/apply/complete/CompleteScreen";
 import { useRecoilValue } from "recoil";
 import { loginState } from "../store/LoginState";
+import SuccessScreen from "../screens/apply/success/SuccessScreen";
+import SuccessSignIn from "../screens/login/SuccessSignIn";
 
 // ----- [ Tabs ] ------
 const Tab = createBottomTabNavigator();
@@ -91,6 +93,7 @@ const HomeTabScreens = () => {
       <HomeStack.Screen name="회원가입" component={SignIn} />
       <HomeStack.Screen name="정보입력" component={SignInForm} />
       <HomeStack.Screen name="회원가입 완료" component={SignInFinish} />
+      <HomeStack.Screen name="완료" component={SuccessSignIn} />
     </HomeStack.Navigator>
   );
 };
@@ -102,6 +105,7 @@ const ApplyTabScreens = () => {
       <ApplyStack.Screen name="신청정보 확인하기" component={NotifyScreen} />
       <ApplyStack.Screen name="매칭결과 확인하기" component={ResultScreen} />
       <ApplyStack.Screen name="밥 메이트 연결완료" component={CompleteScreen} />
+      <ApplyStack.Screen name="신청완료" component={SuccessScreen} />
     </ApplyStack.Navigator>
   );
 };
