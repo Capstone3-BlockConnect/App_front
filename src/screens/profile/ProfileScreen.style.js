@@ -1,10 +1,8 @@
 import styled from "styled-components";
 
-export const ContainerView = styled.View`
+export const ContainerView = styled.ScrollView`
   flex: 1;
   background-color: white;
-
-  padding-top: 10px;
 `;
 
 export const WalletBox = styled.Pressable`
