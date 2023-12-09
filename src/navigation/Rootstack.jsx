@@ -71,6 +71,12 @@ const Rootstack = () => {
 
             tabBarActiveBackgroundColor: "#72727220",
           }}
+          listeners={({ navigation }) => ({
+            tabPress: (e) => {
+              e.preventDefault();
+              navigation.navigate("매칭 신청하기");
+            },
+          })}
         />
         <Tab.Screen
           name="Profile"
