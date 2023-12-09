@@ -4,6 +4,8 @@ export const ContainerView = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
+
+  background-color: white;
 `;
 
 export const IntroduceBoxView = styled.View`
