@@ -9,16 +9,19 @@ const ProfileScreen = () => {
   const navigation = useNavigation();
   const { isLogined } = useRecoilValue(loginState);
 
+  const AlertHandler = () => {
+    Alert.alert("알려드립니다", "로그인해주세요", [
+      { text: "확인", onPress: () => navigation.navigate("Home", "로그인") },
+    ]);
+  };
+
   return (
     <styles.ContainerView>
       <styles.WalletBox
         onPress={() => {
           // 지갑으로 이동
           if (isLogined) navigation.navigate("wallet");
-          else
-            Alert.alert("알려드립니다", "로그인해주세요", [
-              { text: "확인", onPress: () => console.log("확인됨") },
-            ]);
+          else AlertHandler();
         }}
       >
         <styles.TitleWrapper>
@@ -40,10 +43,7 @@ const ProfileScreen = () => {
           onPress={() => {
             // 내 프로필로 이동
             if (isLogined) navigation.navigate("myInfo");
-            else
-              Alert.alert("알려드립니다", "로그인해주세요", [
-                { text: "확인", onPress: () => console.log("확인됨") },
-              ]);
+            else AlertHandler();
           }}
         >
           <styles.WalletItemLabel>내 프로필</styles.WalletItemLabel>
@@ -51,10 +51,7 @@ const ProfileScreen = () => {
         <styles.WalletItem
           onPress={() => {
             if (isLogined) navigation.navigate("chatManage");
-            else
-              Alert.alert("알려드립니다", "로그인해주세요", [
-                { text: "확인", onPress: () => console.log("확인됨") },
-              ]);
+            else AlertHandler();
           }}
         >
           <styles.WalletItemLabel>매칭기록</styles.WalletItemLabel>
@@ -63,10 +60,7 @@ const ProfileScreen = () => {
         <styles.WalletItem
           onPress={() => {
             if (isLogined) navigation.navigate("chatManage");
-            else
-              Alert.alert("알려드립니다", "로그인해주세요", [
-                { text: "확인", onPress: () => console.log("확인됨") },
-              ]);
+            else AlertHandler();
           }}
         >
           <styles.WalletItemLabel>내 채팅링크 관리</styles.WalletItemLabel>
