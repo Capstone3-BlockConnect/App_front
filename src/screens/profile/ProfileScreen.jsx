@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useRecoilValue } from "recoil";
 import { loginState } from "../../store/LoginState";
 import { Alert } from "react-native";
-
+import Ionicons from "@expo/vector-icons/Ionicons";
 const ProfileScreen = () => {
   const navigation = useNavigation();
   const { isLogined } = useRecoilValue(loginState);
@@ -23,7 +23,7 @@ const ProfileScreen = () => {
       >
         <styles.TitleWrapper>
           <styles.WalletTitle>내 지갑</styles.WalletTitle>
-          <styles.WalletTitle>아이콘</styles.WalletTitle>
+          <Ionicons name="enter-sharp" size={20} color="black" />
         </styles.TitleWrapper>
         {isLogined ? (
           <styles.WalletBalance>1320 Point</styles.WalletBalance>
