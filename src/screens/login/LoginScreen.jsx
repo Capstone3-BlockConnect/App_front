@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   LoginBox,
   LoginInput,
   LoginTitle,
+  ModalContainer,
   ScreenContainer,
 } from "./LoginScreen.style";
-import { StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import { Button, Text, TextInput } from "react-native-paper";
 import { Colors } from "../../../assets/Colors";
 import CustomButton from "../../components/buttons/CustomButton";
@@ -14,19 +15,20 @@ import { useNavigation } from "@react-navigation/native";
 import { useRecoilState } from "recoil";
 import { loginState, userState } from "../../store/LoginState";
 import { setStorage } from "../../asyncStorage/asyncStorage";
+import CustomModal from "../../components/modal/CustomModal";
+import LoginErrorModalContents from "./components/LoginErrorModalContents";
+import { css } from "@emotion/native";
 
 export default function LoginScreen() {
+  const [modalVisible, setModalVisible] = useState(false);
   const [userInfo, setUserInfo] = useState({});
   const navigation = useNavigation();
-
+  const [passwordSecured, setPasswordSecured] = useState(false);
   const [info, setInfo] = useRecoilState(userState);
   const [logined, setLogined] = useRecoilState(loginState);
 
-  useEffect(() => {
-    if (logined.isLogined) {
-      navigation.navigate("서비스 소개");
-    }
-  }, [logined.isLogined]);
+  const [modalWords, setModalWords] = useState("로그인 실패");
+
   // 로그인 이후에 하는 것들
   // 1. 기기에 token 저장
   // 2. 전역 변수 업데이트
@@ -53,24 +55,50 @@ export default function LoginScreen() {
 
   const loginSubmit = async (id, pw) => {
     const response = await loginPost({ id: id, pw: pw });
+    const status = response.status;
+    const data = response.data;
+
     const storageResponse = await setStorage({
       asyncKey: "token",
-      data: response?.token,
+      data: data?.token,
     });
 
-    afterLogined({
-      token: response?.token,
-      userId: response?.user,
-      age: response?.age,
-      foodCategory: response?.foodCategory,
-      gender: response?.gender,
-      nickName: response?.nickName,
-      phoneNumber: response?.phoneNumber,
-    });
+    if (status === 200 && storageResponse.success) {
+      afterLogined({
+        token: data?.token,
+        userId: data?.user,
+        age: data?.age,
+        foodCategory: data?.foodCategory,
+        gender: data?.gender,
+        nickName: data?.nickName,
+        phoneNumber: data?.phoneNumber,
+      });
+
+      return true;
+    } else {
+      if (response.status == 401) {
+        setModalWords("존재하지 않는 유저입니다.");
+      } else if (response.status == 402) {
+        setModalWords("비밀번호를 틀리셨습니다.");
+      } else if (response.status == 500) {
+        setModalWords("서비스에 문제가 있어 수정중입니다.ㄴ");
+      }
+      return false;
+    }
+
   };
 
   return (
     <ScreenContainer>
+      <CustomModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+      >
+        <LoginErrorModalContents
+          setModalVisible={setModalVisible}
+          modalWords={modalWords}
+        />
+      </CustomModal>
       <LoginBox style={styles.LoginBoxUpper}>
         <LoginTitle variant="titleLarge">로그인하기</LoginTitle>
         <LoginInput
@@ -87,8 +115,15 @@ export default function LoginScreen() {
           mode="outlined"
           placeholder="비밀번호를 입력해주세요"
           value={userInfo.pw}
-          secureTextEntry
-          right={<TextInput.Icon icon="eye" />}
+          secureTextEntry={!passwordSecured}
+          right={
+            <TextInput.Icon
+              icon="eye"
+              onPress={() => {
+                setPasswordSecured(!passwordSecured);
+              }}
+            />
+          }
           onChangeText={(pw) => {
             setUserInfo({ ...userInfo, pw: pw });
           }}
@@ -98,7 +133,16 @@ export default function LoginScreen() {
           buttonText="Login"
           mode="contained"
           onPress={() => {
-            loginSubmit(userInfo.id, userInfo.pw);
+            const login = async () => {
+              const response = await loginSubmit(userInfo.id, userInfo.pw);
+              if (response) {
+                navigation.navigate("서비스 소개");
+              } else {
+                setModalVisible(true);
+              }
+            };
+
+            login();
           }}
         />
       </LoginBox>
@@ -117,36 +161,46 @@ export default function LoginScreen() {
             <View style={styles.SocialLoginBtns}>
               <Button
                 mode="outlined"
-                style={{ borderRadius: 10, paddingHorizontal: 10 }}
-                labelStyle={{
-                  fontSize: 18,
-                  fontWeight: "bold",
-                  color: "black",
-                }}
-                onPress={() => {}}
+                style={css`
+                  border-radius: 10px;
+                  padding: 0px 10px;
+                `}
+                labelStyle={css`
+                  font-size: 18px;
+                  font-weight: 700;
+                  color: black;
+                `}
+                onPress={() =>
+                  navigation.navigate("Apply", { screen: "매칭결과 확인하기" })
+                }
               >
                 Twitter
               </Button>
               <Button
                 mode="outlined"
-                style={{ borderRadius: 10, paddingHorizontal: 10 }}
-                labelStyle={{
-                  fontSize: 18,
-                  fontWeight: "bold",
-                  color: "black",
-                }}
+                style={css`
+                  border-radius: 10px;
+                  padding: 0px 10px;
+                `}
+                labelStyle={css`
+                  font-size: 18px;
+                  font-weight: 700;
+                  color: black;
+                `}
               >
                 Google
               </Button>
             </View>
             <Button
               mode="contained"
-              style={{
-                width: "100%",
-                backgroundColor: "#ccc",
-                borderRadius: 10,
-              }}
-              labelStyle={{ fontSize: 20 }}
+              style={css`
+                width: 100%;
+                background-color: #ccc;
+                border-radius: 10px;
+              `}
+              labelStyle={css`
+                font-size: 20px;
+              `}
               onPress={() => {
                 navigation.navigate("회원가입");
               }}

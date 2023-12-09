@@ -2,8 +2,10 @@ import { useState } from "react";
 import { StyleSheet, View, Text, ScrollView } from "react-native";
 import { Button, Checkbox, Dialog, Portal } from "react-native-paper";
 import { color } from "../../../assets/colors/color";
+import { useNavigation } from "@react-navigation/native";
 
-export default function SignIn({ navigation }) {
+export default function SignIn() {
+  const navigation = useNavigation();
   const [checked, setChecked] = useState(false);
   const [visible, setVisible] = useState(false);
   const hideDialog = () => setVisible(false);
@@ -76,7 +78,9 @@ export default function SignIn({ navigation }) {
         >
           <Button
             mode="outlined"
-            onPress={() => {}}
+            onPress={() => {
+              navigation.goBack();
+            }}
             style={{
               borderRadius: 10,
               backgroundColor: color.BtnSub,

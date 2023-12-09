@@ -1,10 +1,8 @@
 import styled from "styled-components";
 
-export const ContainerView = styled.View`
+export const ContainerView = styled.ScrollView`
   flex: 1;
   background-color: white;
-
-  padding-top: 10px;
 `;
 
 export const WalletBox = styled.Pressable`
@@ -47,7 +45,8 @@ export const WalletMenu = styled.View`
   margin-top: 20px;
 `;
 
-export const WalletItem = styled.View`
+
+export const WalletItem = styled.Pressable`
   border-bottom-width: 1px;
   border-bottom-color: #cbcbcb;
   border-bottom-style: double;

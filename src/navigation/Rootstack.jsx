@@ -13,6 +13,16 @@ import SignIn from "../screens/login/SignIn";
 import SignInForm from "../screens/login/SignInForm";
 import SignInFinish from "../screens/login/SignInFinish";
 import WalletScreen from "../screens/profile/wallet/WalletScreen";
+import MyInfoScreen from "../screens/profile/myInfo/MyInfoScreen";
+import ChatManageScreen from "../screens/profile/chatlink/ChatManageScreen";
+import NotifyScreen from "../screens/apply/notify/NotifyScreen";
+import ResultScreen from "../screens/apply/result/ResultScreen";
+import CompleteScreen from "../screens/apply/complete/CompleteScreen";
+import { useRecoilValue } from "recoil";
+import { loginState } from "../store/LoginState";
+import SuccessScreen from "../screens/apply/success/SuccessScreen";
+import SuccessSignIn from "../screens/login/SuccessSignIn";
+
 
 // ----- [ Tabs ] ------
 const Tab = createBottomTabNavigator();
@@ -22,38 +32,59 @@ const ApplyStack = createNativeStackNavigator();
 const ProfileStack = createNativeStackNavigator();
 
 const Rootstack = () => {
+  const { isLogined } = useRecoilValue(loginState);
   return (
     <NavigationContainer>
-      <Tab.Navigator screenOptions={{ headerShown: false }}>
+      <Tab.Navigator
+        screenOptions={{
+          headerShown: false,
+          tabBarActiveTintColor: "gray", // 활성 탭의 아이콘 색상을 빨간색으로 설정
+          tabBarInactiveTintColor: "white",
+        }}
+      >
         <Tab.Screen
           name="Home"
           component={HomeTabScreens}
           options={{
-            tabBarIcon: () => (
-              <MaterialCommunityIcons name="home" size={32} color="green" />
-            ),
+            tabBarIcon: () => <MaterialCommunityIcons name="home" size={32} />,
+            tabBarActiveBackgroundColor: "#72727220",
           }}
+          listeners={({ navigation }) => ({
+            tabPress: (e) => {
+              // 로그인 상태가 아니라면 기본 동작을 방지하고 로그인 스크린으로 리디렉션
+              if (!isLogined) {
+                e.preventDefault();
+                navigation.navigate("로그인");
+              } else {
+                e.preventDefault();
+                navigation.navigate("서비스 소개");
+              }
+            },
+          })}
         />
         <Tab.Screen
           name="Apply"
           component={ApplyTabScreens}
           options={{
             tabBarIcon: () => (
-              <MaterialCommunityIcons
-                name="handshake"
-                size={32}
-                color="green"
-              />
+              <MaterialCommunityIcons name="handshake" size={32} />
             ),
+
+            tabBarActiveBackgroundColor: "#72727220",
           }}
+          listeners={({ navigation }) => ({
+            tabPress: (e) => {
+              //e.preventDefault();
+              navigation.navigate("매칭 신청하기");
+            },
+          })}
         />
         <Tab.Screen
           name="Profile"
           component={ProfileTabScreens}
           options={{
-            tabBarIcon: () => (
-              <Ionicons name="person-circle" size={32} color="green" />
-            ),
+            tabBarIcon: () => <Ionicons name="person-circle" size={32} />,
+            tabBarActiveBackgroundColor: "#72727220",
           }}
         />
       </Tab.Navigator>
@@ -69,6 +100,8 @@ const HomeTabScreens = () => {
       <HomeStack.Screen name="회원가입" component={SignIn} />
       <HomeStack.Screen name="정보입력" component={SignInForm} />
       <HomeStack.Screen name="회원가입 완료" component={SignInFinish} />
+      <HomeStack.Screen name="완료" component={SuccessSignIn} />
+
     </HomeStack.Navigator>
   );
 };
@@ -76,7 +109,11 @@ const HomeTabScreens = () => {
 const ApplyTabScreens = () => {
   return (
     <ApplyStack.Navigator>
-      <ApplyStack.Screen name="main" component={ApplyScreen} />
+      <ApplyStack.Screen name="매칭 신청하기" component={ApplyScreen} />
+      <ApplyStack.Screen name="신청정보 확인하기" component={NotifyScreen} />
+      <ApplyStack.Screen name="매칭결과 확인하기" component={ResultScreen} />
+      <ApplyStack.Screen name="밥 메이트 연결완료" component={CompleteScreen} />
+      <ApplyStack.Screen name="신청완료" component={SuccessScreen} />
     </ApplyStack.Navigator>
   );
 };
@@ -93,6 +130,16 @@ const ProfileTabScreens = () => {
         name="wallet"
         options={{ title: "내 지갑" }}
         component={WalletScreen}
+      />
+      <ProfileStack.Screen
+        name="myInfo"
+        options={{ title: "내 프로필 정보" }}
+        component={MyInfoScreen}
+      />
+      <ProfileStack.Screen
+        name="chatManage"
+        options={{ title: "내 채팅링크 관리하기" }}
+        component={ChatManageScreen}
       />
     </ProfileStack.Navigator>
   );

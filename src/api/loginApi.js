@@ -15,13 +15,14 @@ export const loginPost = async ({ id, pw }) => {
     );
 
     if (response.status === 200) {
-      return response.data;
+      return response;
     } else {
       console.log(`로그인 API 에러 : ${response.status}`);
-      return response.status;
+      return response;
     }
   } catch (e) {
-    console.error(e);
+    return e.response;
+
   }
 };
 
