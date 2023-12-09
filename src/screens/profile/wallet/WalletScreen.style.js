@@ -43,8 +43,8 @@ export const CardSubTitle = styled.Text`
   color: white;
 `;
 
-export const CardBalanceArea = styled(HorizontalBox)``;
 
+export const CardBalanceArea = styled(HorizontalBox)``;
 export const CardBalance = styled.Text`
   font-size: 35px;
   font-weight: 700;

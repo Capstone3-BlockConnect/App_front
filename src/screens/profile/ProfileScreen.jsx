@@ -27,6 +27,7 @@ const ProfileScreen = () => {
           // 지갑으로 이동
           if (isLogined) navigation.navigate("wallet");
           else AlertHandler();
+
         }}
       >
         <styles.TitleWrapper>
@@ -38,6 +39,7 @@ const ProfileScreen = () => {
         ) : (
           <styles.WalletBalance>로그인해주세요</styles.WalletBalance>
         )}
+
 
         <styles.WalletBalanceLabel>
           내 활동보상 포인트

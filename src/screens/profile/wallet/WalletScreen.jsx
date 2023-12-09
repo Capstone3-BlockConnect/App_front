@@ -1,3 +1,4 @@
+
 import * as styles from "./WalletScreen.style";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Entypo from "@expo/vector-icons/Entypo";

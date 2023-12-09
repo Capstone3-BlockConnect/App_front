@@ -9,7 +9,9 @@ export const setStorage = async ({ asyncKey, data }) => {
     await setItem(JSON.stringify(data));
     return { success: true, item: JSON.stringify(data) };
   } catch (e) {
+
     // Alert.alert(`저장하기 실패`, `데이터 저장에 실패하였습니다.`);
+
     return { success: false };
   }
 };
