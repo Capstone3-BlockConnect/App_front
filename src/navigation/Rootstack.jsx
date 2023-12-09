@@ -23,7 +23,6 @@ import { loginState } from "../store/LoginState";
 import SuccessScreen from "../screens/apply/success/SuccessScreen";
 import SuccessSignIn from "../screens/login/SuccessSignIn";
 
-
 // ----- [ Tabs ] ------
 const Tab = createBottomTabNavigator();
 
@@ -96,12 +95,15 @@ const HomeTabScreens = () => {
   return (
     <HomeStack.Navigator>
       <HomeStack.Screen name="로그인" component={LoginScreen} />
-      <HomeStack.Screen name="서비스 소개" component={HomeScreen} />
+      <HomeStack.Screen
+        name="서비스 소개"
+        component={HomeScreen}
+        options={{ headerBackVisible: false }}
+      />
       <HomeStack.Screen name="회원가입" component={SignIn} />
       <HomeStack.Screen name="정보입력" component={SignInForm} />
       <HomeStack.Screen name="회원가입 완료" component={SignInFinish} />
       <HomeStack.Screen name="완료" component={SuccessSignIn} />
-
     </HomeStack.Navigator>
   );
 };
