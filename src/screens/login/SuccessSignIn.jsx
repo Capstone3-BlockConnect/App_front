@@ -25,7 +25,7 @@ const SuccessSignIn = () => {
             color: black;
           `}
           onPress={() => {
-            navigation.navigate("Home", { screen: "서비스 소개" });
+            navigation.navigate("Home", { screen: "로그인" });
           }}
         >
           처음으로
