@@ -1,19 +1,46 @@
 import { useEffect, useState } from "react";
-import { ScrollView, Text, View, Modal } from "react-native";
+import { Text, View, Modal } from "react-native";
 import { Button, TextInput, Snackbar } from "react-native-paper";
 import { color } from "../../../assets/colors/color";
 import { submitSignIn } from "../../api/loginApi";
+import * as styles from "./SignInForm.style";
+import { css } from "@emotion/native";
 
 export default function SignInForm({ navigation }) {
   const [formData, setFormData] = useState({ gender: "남성", food: "양식" });
-  const [visible, setVisible] = useState(false);
-  const [snackBarVisible, setSnackBarVisible] = useState(false);
-  const showModal = () => setVisible(true);
-  const hideModal = () => setVisible(false);
+  const [pwCheck, setPwCheck] = useState("");
+  const [canGoNext, setCanGoNext] = useState(false);
+
+  const foodCategories = [
+    "한식",
+    "일식",
+    "양식",
+    "아시안",
+    "테이크아웃",
+    "술집",
+    "치킨/피자",
+    "카페",
+  ];
 
   useEffect(() => {
     console.log(formData);
   }, [formData]);
+
+  const handleSelectFood = (food) => {
+    setFormData((prev) => ({ ...prev, food: food }));
+  };
+
+  useEffect(() => {
+    if (
+      pwCheck == formData?.pw &&
+      formData?.id &&
+      formData?.gender &&
+      formData?.age &&
+      formData?.phoneNum &&
+      formData?.food
+    )
+      setCanGoNext(true);
+  }, [formData, pwCheck]);
 
   const SubmitSignInForm = async (
     id,
@@ -38,90 +65,23 @@ export default function SignInForm({ navigation }) {
     } catch (error) {
       if (error.response.status == 409) {
         console.log("이미 사용자가 존재합니다.");
-        showModal();
       } else if (error.response.status == 500) {
-        setSnackBarVisible(true);
       } else {
         console.error(error);
       }
     }
   };
   return (
-    <ScrollView
-      contentContainerStyle={{
-        justifyContent: "center",
-        rowGap: 20,
-        flexGrow: 1,
-      }}
-      style={{
-        backgroundColor: "white",
-      }}
+    <styles.Container
+      contentContainerStyle={css`
+        justify-content: center;
+        row-gap: 20px;
+        padding-top: 20px;
+      `}
     >
-      <Snackbar
-        visible={snackBarVisible}
-        onDismiss={() => {
-          setSnackBarVisible(false);
-        }}
-        elevation={5}
-      >
-        회원가입 정보를 모두 입력해주세요
-      </Snackbar>
-      <Modal visible={visible} animationType="slide" transparent={true}>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <View
-            style={{
-              width: "80%",
-              backgroundColor: "white",
-              borderRadius: 20,
-              padding: 20,
-              alignItems: "center",
-              shadowColor: "#000",
-              shadowOffset: {
-                width: 0,
-                height: 2,
-              },
-              shadowOpacity: 0.25,
-              shadowRadius: 3.84,
-              elevation: 5,
-              rowGap: 10,
-            }}
-          >
-            <Text style={{ fontSize: 17, fontWeight: "bold" }}>
-              계정이 이미 존재합니다.
-            </Text>
-            <Text style={{ fontSize: 15, color: "gray" }}>로그인해주세요</Text>
-            <Button
-              mode="contained"
-              onPress={hideModal}
-              style={{
-                backgroundColor: color.BtnPrimary,
-                borderRadius: 10,
-                width: "80%",
-              }}
-              labelStyle={{ color: "white" }}
-            >
-              닫기
-            </Button>
-          </View>
-        </View>
-      </Modal>
-
       <View style={{ rowGap: 10 }}>
-        <View
-          style={{
-            flexDirection: "column",
-            alignItems: "flex-start",
-            width: "95%",
-            alignSelf: "center",
-          }}
-        >
-          <Text style={{ textAlign: "left" }}>아이디*</Text>
+        <styles.LabelArea>
+          <styles.Label>아이디*</styles.Label>
           <TextInput
             mode="outlined"
             style={{
@@ -138,16 +98,9 @@ export default function SignInForm({ navigation }) {
               setFormData((prev) => ({ ...prev, id: text }));
             }}
           />
-        </View>
-        <View
-          style={{
-            flexDirection: "column",
-            alignItems: "flex-start",
-            width: "95%",
-            alignSelf: "center",
-          }}
-        >
-          <Text style={{ textAlign: "left" }}>비밀번호*</Text>
+        </styles.LabelArea>
+        <styles.LabelArea>
+          <styles.Label>비밀번호*</styles.Label>
           <TextInput
             mode="outlined"
             placeholder="비밀번호를 입력해주세요"
@@ -161,21 +114,12 @@ export default function SignInForm({ navigation }) {
             }}
             outlineColor="black"
             cursorColor="black"
-            secureTextEntry
             activeOutlineColor="black"
-            right={<TextInput.Icon icon="eye" />}
             placeholderTextColor="black"
           />
-        </View>
-        <View
-          style={{
-            flexDirection: "column",
-            alignItems: "flex-start",
-            width: "95%",
-            alignSelf: "center",
-          }}
-        >
-          <Text style={{ textAlign: "left" }}>비밀번호 확인*</Text>
+        </styles.LabelArea>
+        <styles.LabelArea>
+          <styles.Label>비밀번호 확인*</styles.Label>
           <TextInput
             mode="outlined"
             style={{
@@ -183,24 +127,18 @@ export default function SignInForm({ navigation }) {
               alignSelf: "center",
               backgroundColor: "white",
             }}
-            right={<TextInput.Icon icon="eye" />}
-            secureTextEntry
+            onChangeText={(text) => {
+              setPwCheck(text);
+            }}
             outlineColor="black"
             placeholder="비밀번호를 한번 더 입력해주세요"
             cursorColor="black"
             activeOutlineColor="black"
             placeholderTextColor="black"
           />
-        </View>
-        <View
-          style={{
-            flexDirection: "column",
-            alignItems: "flex-start",
-            width: "95%",
-            alignSelf: "center",
-          }}
-        >
-          <Text style={{ textAlign: "left" }}>닉네임</Text>
+        </styles.LabelArea>
+        <styles.LabelArea>
+          <styles.Label>닉네임</styles.Label>
           <TextInput
             mode="outlined"
             style={{
@@ -212,21 +150,14 @@ export default function SignInForm({ navigation }) {
               setFormData((prev) => ({ ...prev, nickname: text }));
             }}
             outlineColor="black"
-            placeholder="닉네임을 입력해주세요*"
+            placeholder="입력하지 않으시면 자동으로 생성됩니다"
             cursorColor="black"
             activeOutlineColor="black"
             placeholderTextColor="black"
           />
-        </View>
-        <View
-          style={{
-            flexDirection: "column",
-            alignItems: "flex-start",
-            width: "95%",
-            alignSelf: "center",
-          }}
-        >
-          <Text style={{ textAlign: "left" }}>핸드폰번호</Text>
+        </styles.LabelArea>
+        <styles.LabelArea>
+          <styles.Label>핸드폰번호</styles.Label>
           <TextInput
             mode="outlined"
             style={{
@@ -244,16 +175,9 @@ export default function SignInForm({ navigation }) {
             activeOutlineColor="black"
             placeholderTextColor="black"
           />
-        </View>
-        <View
-          style={{
-            flexDirection: "column",
-            alignItems: "flex-start",
-            width: "95%",
-            alignSelf: "center",
-          }}
-        >
-          <Text style={{ textAlign: "left" }}>나이</Text>
+        </styles.LabelArea>
+        <styles.LabelArea>
+          <styles.Label>나이</styles.Label>
           <TextInput
             mode="outlined"
             style={{
@@ -271,33 +195,63 @@ export default function SignInForm({ navigation }) {
             activeOutlineColor="black"
             placeholderTextColor="black"
           />
-        </View>
+        </styles.LabelArea>
+        <styles.LabelArea>
+          <styles.Label>성별</styles.Label>
+          <styles.GenderBox>
+            <styles.GenderButton
+              selected={formData.gender == "여성" && true}
+              onPress={() => {
+                setFormData((prev) => ({ ...prev, gender: "여성" }));
+              }}
+            >
+              <styles.ButtonText>여성</styles.ButtonText>
+            </styles.GenderButton>
+            <styles.GenderButton
+              onPress={() => {
+                setFormData((prev) => ({ ...prev, gender: "남성" }));
+              }}
+              selected={formData.gender == "남성" && true}
+            >
+              <styles.ButtonText>남성</styles.ButtonText>
+            </styles.GenderButton>
+          </styles.GenderBox>
+        </styles.LabelArea>
+
+        <styles.LabelArea>
+          <styles.Label>선호 음식카테고리</styles.Label>
+          <styles.FoodBox>
+            {foodCategories.map((food, index) => (
+              <styles.FoodButton
+                selected={formData.food == food && true}
+                onPress={() => {
+                  handleSelectFood(food);
+                }}
+                key={index}
+              >
+                <styles.ButtonText>{food}</styles.ButtonText>
+              </styles.FoodButton>
+            ))}
+          </styles.FoodBox>
+        </styles.LabelArea>
       </View>
-      <View
-        style={{
-          flexDirection: "row",
-          alignSelf: "center",
-          columnGap: 5,
-        }}
-      >
-        <Button
+      <styles.ButtonBox>
+        <styles.PrevButton
           mode="outlined"
           onPress={() => {
             navigation.goBack();
           }}
-          style={{
-            borderRadius: 10,
-            backgroundColor: color.BtnSub,
-            width: "45%",
-          }}
-          labelStyle={{
-            color: "black",
-            fontWeight: "bold",
-          }}
+          labelStyle={css`
+            color: black;
+            font-weight: 700;
+          `}
         >
           이전
-        </Button>
-        <Button
+        </styles.PrevButton>
+        <styles.NextButton
+          style={css`
+            background-color: ${!canGoNext && "gray"};
+          `}
           mode="contained"
           onPress={() => {
             console.log(
@@ -320,19 +274,15 @@ export default function SignInForm({ navigation }) {
             );
             navigation.navigate("완료");
           }}
-          style={{
-            borderRadius: 10,
-            backgroundColor: color.BtnPrimary,
-            width: "45%",
-          }}
-          labelStyle={{
-            color: "white",
-            fontWeight: "bold",
-          }}
+          labelStyle={css`
+            color: white;
+            font-weight: 700;
+          `}
+          disabled={!canGoNext}
         >
           다음
-        </Button>
-      </View>
-    </ScrollView>
+        </styles.NextButton>
+      </styles.ButtonBox>
+    </styles.Container>
   );
 }
