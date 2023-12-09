@@ -5,6 +5,7 @@ import { useRecoilValue } from "recoil";
 import { loginState } from "../../store/LoginState";
 import { Alert } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { css } from "@emotion/native";
 const ProfileScreen = () => {
   const navigation = useNavigation();
   const { isLogined } = useRecoilValue(loginState);
@@ -16,7 +17,11 @@ const ProfileScreen = () => {
   };
 
   return (
-    <styles.ContainerView>
+    <styles.ContainerView
+      contentContainerStyle={css`
+        padding-top: 10px;
+      `}
+    >
       <styles.WalletBox
         onPress={() => {
           // 지갑으로 이동
