@@ -282,7 +282,9 @@ export default function SignInForm({ navigation }) {
       >
         <Button
           mode="outlined"
-          onPress={() => {}}
+          onPress={() => {
+            navigation.goBack();
+          }}
           style={{
             borderRadius: 10,
             backgroundColor: color.BtnSub,
@@ -316,6 +318,7 @@ export default function SignInForm({ navigation }) {
               formData.phoneNum,
               formData.food
             );
+            navigation.navigate("완료");
           }}
           style={{
             borderRadius: 10,

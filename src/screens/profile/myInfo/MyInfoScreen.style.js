@@ -1,11 +1,10 @@
 import styled from "@emotion/native";
 
-export const Container = styled.View`
+export const Container = styled.ScrollView`
   flex: 1;
   width: 97%;
   align-self: center;
-
-  padding-top: 10px;
+  background-color: white;
 `;
 
 // 환영문

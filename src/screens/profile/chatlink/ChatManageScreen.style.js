@@ -13,8 +13,10 @@ export const LayerContainer = styled.View`
   width: 93%;
   align-self: center;
 
+  position: absolute;
+  z-index: 100;
+
   row-gap: 10px;
-  background-color: white;
 `;
 
 // 환영인사
@@ -137,4 +139,22 @@ export const RightLowerButton = styled.View`
 export const ButtonText = styled.Text`
   font-size: 15px;
   font-weight: 900;
+`;
+
+export const RedCircle = styled.View`
+  border-radius: 100px;
+  width: 100px;
+  height: 100px;
+  background-color: #f4e6e7;
+
+  position: absolute;
+  top: 40px;
+  left: 200px;
+  z-index: 10;
+`;
+export const BlueCircle = styled(RedCircle)`
+  background-color: #e5f0db;
+  top: 90px;
+  left: 250px;
+  z-index: 10;
 `;

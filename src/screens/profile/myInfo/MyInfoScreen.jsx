@@ -10,7 +10,11 @@ const MyInfoScreen = () => {
   const { nickName, gender, age, phoneNumber, foodCategory, userId } =
     userInfo.userId;
   return (
-    <styles.Container>
+    <styles.Container
+      contentContainerStyle={css`
+        padding-top: 10px;
+      `}
+    >
       <ScrollView>
         {/*
         환영인사

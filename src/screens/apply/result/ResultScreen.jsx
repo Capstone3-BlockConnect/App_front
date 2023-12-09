@@ -3,8 +3,13 @@ import * as styles from "./ResultScreen.style";
 import NotifyWithTime from "../../../components/atom/NotifyWithTime";
 import * as profileStyle from "../../profile/myInfo/MyInfoScreen.style";
 import { useNavigation } from "@react-navigation/native";
+import CustomModal from "../../../components/modal/CustomModal";
+import { useState } from "react";
+import RefuseModalContent from "./RefuseModalContent";
+
 const ResultScreen = () => {
   const navigation = useNavigation();
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <styles.Container
@@ -12,6 +17,12 @@ const ResultScreen = () => {
         row-gap: 15px;
       `}
     >
+      <CustomModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+      >
+        <RefuseModalContent setModalVisible={setModalVisible} />
+      </CustomModal>
       <styles.MatchingInfoArea>
         <styles.AreaLabel>임기현 님의 10월 12일 매칭정보</styles.AreaLabel>
         <profileStyle.UpperWrapper
@@ -93,6 +104,9 @@ const ResultScreen = () => {
             font-weight: 900;
             color: black;
           `}
+          onPress={() => {
+            setModalVisible(true);
+          }}
         >
           거절
         </styles.RefuseButton>

@@ -3,7 +3,6 @@ import { useRecoilValue } from "recoil";
 import { userState } from "../../../store/LoginState";
 import { css } from "@emotion/native";
 import { Button } from "react-native-paper";
-import { Text } from "react-native";
 
 const ChatManageScreen = () => {
   const info = useRecoilValue(userState);
@@ -12,6 +11,8 @@ const ChatManageScreen = () => {
     info;
   return (
     <styles.Container>
+      <styles.RedCircle />
+      <styles.BlueCircle />
       <styles.LayerContainer>
         <styles.GreetBox>
           <styles.GreetFirstArea>
@@ -56,7 +57,6 @@ const ChatManageScreen = () => {
           <styles.LeftBigArea>
             <styles.LeftButton>
               <styles.ButtonText>링크로 들어가기</styles.ButtonText>
-            
             </styles.LeftButton>
           </styles.LeftBigArea>
           <styles.RightBigArea>

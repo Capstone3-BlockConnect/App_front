@@ -73,7 +73,7 @@ const Rootstack = () => {
           }}
           listeners={({ navigation }) => ({
             tabPress: (e) => {
-              e.preventDefault();
+              //e.preventDefault();
               navigation.navigate("매칭 신청하기");
             },
           })}

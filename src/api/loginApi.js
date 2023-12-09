@@ -21,7 +21,7 @@ export const loginPost = async ({ id, pw }) => {
       return response;
     }
   } catch (e) {
-    console.error(e);
+    return e.response;
   }
 };
 

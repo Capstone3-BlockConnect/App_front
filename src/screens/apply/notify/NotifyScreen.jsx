@@ -4,8 +4,10 @@ import NotifyWithTime from "../../../components/atom/NotifyWithTime";
 import { css } from "@emotion/native";
 import { Checkbox } from "react-native-paper";
 import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 
 const NotifyScreen = () => {
+  const navigation = useNavigation();
   const [checked, setChecked] = useState(false);
   const [matchingInfo, setMatchingInfo] = useState({
     date: "2023.10.11",
@@ -25,9 +27,17 @@ const NotifyScreen = () => {
         <styles.AreaLabel>신청정보</styles.AreaLabel>
         <styles.AreaLabel>{matchingInfo.date}</styles.AreaLabel>
         <styles.NotifyComponentWrapper>
-          <NotifyWithTime contentText="식사가능시간 시작" />
-          <NotifyWithTime contentText="식사 매칭 시간" />
-          <NotifyWithTime contentText="식사가능시간 마감" />
+          <NotifyWithTime
+            contentText="식사가능시간 시작"
+            timeText="13:00"
+            lightColor="#F3BABD"
+          />
+          <NotifyWithTime contentText="식사 매칭 시간" timeText="13-15" />
+          <NotifyWithTime
+            contentText="식사가능시간 마감"
+            timeText="15:00"
+            lightColor="#F3BABD"
+          />
         </styles.NotifyComponentWrapper>
       </styles.CheckArea>
       <styles.NotifyArea>
@@ -98,6 +108,9 @@ const NotifyScreen = () => {
           `}
           isDisabled={!checked}
           disabled={checked ? false : true}
+          onPress={() => {
+            navigation.navigate("신청완료");
+          }}
         >
           제출하기
         </styles.ApplyButton>

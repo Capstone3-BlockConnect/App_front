@@ -1,6 +1,6 @@
 import React from "react";
-import { StyleSheet, View, Image } from "react-native";
-import styled, { css } from "@emotion/native";
+import { View } from "react-native";
+import { css } from "@emotion/native";
 import {
   ContainerView,
   IntroduceBoxView,
@@ -32,49 +32,57 @@ export default function HomeScreen() {
           align-items: center;
           width: 85%;
           row-gap: 10px;
-          margin-top: 20;
+          margin-top: 20px;
         `}
       >
         <LoginBtnBox>
           <Button
             mode="contained"
-            onPress={() => console.log("Pressed")}
-            style={{
-              borderRadius: 10,
-              backgroundColor: color.BtnPrimary,
-              width: "45%",
+            onPress={() => {
+              navigation.navigate("Apply", { screen: "매칭 신청하기" });
             }}
-            labelStyle={{
-              color: "white",
-              fontWeight: "bold",
-            }}
+            style={css`
+              border-radius: 10px;
+              background-color: ${color.BtnPrimary};
+              width: 45%;
+            `}
+            labelStyle={css`
+              color: white;
+              font-weight: 900;
+            `}
           >
             매칭신청하기
           </Button>
           <Button
             mode="outlined"
             onPress={() => console.log("Pressed")}
-            style={{
-              borderRadius: 10,
-              backgroundColor: color.BtnSub,
-              width: "45%",
-            }}
-            labelStyle={{
-              color: "black",
-              fontWeight: "bold",
-            }}
+            style={css`
+              border-radius: 10px;
+              background-color: ${color.BtnSub};
+              width: 45%;
+            `}
+            labelStyle={css`
+              color: black;
+              font-weight: 900;
+            `}
           >
             종료하기
           </Button>
         </LoginBtnBox>
         <Button
           mode="outlined"
-          onPress={() => console.log("Pressed")}
-          style={{ width: "100%", borderRadius: 10, backgroundColor: "white" }}
-          labelStyle={{
-            color: "black",
-            fontWeight: "bold",
-          }}
+          onPress={() =>
+            navigation.navigate("Apply", { screen: "매칭결과 확인하기" })
+          }
+          style={css`
+            width: 100%;
+            border-radius: 10px;
+            background-color: "white";
+          `}
+          labelStyle={css`
+            font-weight: 900;
+            color: black;
+          `}
         >
           매칭결과 확인하기
         </Button>

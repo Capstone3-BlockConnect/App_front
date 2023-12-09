@@ -3,9 +3,21 @@ import * as styles from "../ApplyScreen.style";
 import CustomModal from "../../../components/modal/CustomModal";
 import { css } from "@emotion/native";
 import { useNavigation } from "@react-navigation/native";
+import { useEffect, useState } from "react";
+import EatTimeModalContent from "./EatTimeModalContent";
 const InputBox = ({ modalVisible, setModalVisible }) => {
+  const [requestData, setRequestData] = useState({
+    date: "",
+    time: "",
+    category: "양식",
+    memo: "잘 부탁드립니다",
+  });
+
   const navigation = useNavigation();
 
+  useEffect(() => {
+    console.log(`modal Visible : ${modalVisible}`);
+  }, [modalVisible]);
   return (
     <View>
       <styles.ContentArea>
@@ -21,26 +33,33 @@ const InputBox = ({ modalVisible, setModalVisible }) => {
           <styles.InputBoxContent>2023.10.11</styles.InputBoxContent>
           <styles.Title>식사날짜를 선택해주세요</styles.Title>
         </styles.InfoBox>
-        <styles.InfoBox>
-          <styles.InputBoxContent>13:00</styles.InputBoxContent>
+        <CustomModal
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+        >
+          <EatTimeModalContent setModalVisible={setModalVisible} />
+        </CustomModal>
+        <styles.InfoBox
+          onPress={() => {
+            setModalVisible(true);
+          }}
+        >
+          <styles.InputBoxContent>
+            {requestData.time || "클릭"}
+          </styles.InputBoxContent>
           <styles.Title>식사시간을 선택해주세요</styles.Title>
         </styles.InfoBox>
 
         <styles.HorizontalInputContainer>
           <styles.FoodBox>
-            <styles.InputBoxContent>양식</styles.InputBoxContent>
+            <styles.InputBoxContent>
+              {requestData.category}
+            </styles.InputBoxContent>
             <styles.Title>선호 음식 카테고리</styles.Title>
           </styles.FoodBox>
-          <CustomModal
-            modalVisible={modalVisible}
-            setModalVisible={setModalVisible}
-          />
-          <styles.MemoBox
-            onPress={() => {
-              setModalVisible(true);
-            }}
-          >
-            <styles.MemoBoldContent>안녕하세요</styles.MemoBoldContent>
+
+          <styles.MemoBox>
+            <styles.MemoBoldContent>{requestData.memo}</styles.MemoBoldContent>
             <styles.Title>메모</styles.Title>
           </styles.MemoBox>
         </styles.HorizontalInputContainer>
@@ -53,6 +72,9 @@ const InputBox = ({ modalVisible, setModalVisible }) => {
             font-weight: 700;
             font-size: 17px;
           `}
+          onPress={() => {
+            navigation.navigate("Home", { screen: "서비스 소개" });
+          }}
         >
           취소하기
         </styles.CancelButton>
