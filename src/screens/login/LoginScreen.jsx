@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   LoginBox,
   LoginInput,
   LoginTitle,
+  ModalContainer,
   ScreenContainer,
 } from "./LoginScreen.style";
 import { Alert, StyleSheet, View } from "react-native";
@@ -13,14 +14,20 @@ import { loginPost } from "../../api/loginApi";
 import { useNavigation } from "@react-navigation/native";
 import { useRecoilState } from "recoil";
 import { loginState, userState } from "../../store/LoginState";
-import { getStorageData, setStorage } from "../../asyncStorage/asyncStorage";
+import { setStorage } from "../../asyncStorage/asyncStorage";
+import CustomModal from "../../components/modal/CustomModal";
+import LoginErrorModalContents from "./components/LoginErrorModalContents";
+import { css } from "@emotion/native";
 
 export default function LoginScreen() {
+  const [modalVisible, setModalVisible] = useState(false);
   const [userInfo, setUserInfo] = useState({});
   const navigation = useNavigation();
   const [passwordSecured, setPasswordSecured] = useState(false);
   const [info, setInfo] = useRecoilState(userState);
   const [logined, setLogined] = useRecoilState(loginState);
+
+  const [modalWords, setModalWords] = useState("로그인 실패");
 
   // 로그인 이후에 하는 것들
   // 1. 기기에 token 저장
@@ -56,7 +63,7 @@ export default function LoginScreen() {
       data: data?.token,
     });
 
-    if (status === 200) {
+    if (status === 200 && storageResponse.success) {
       afterLogined({
         token: data?.token,
         userId: data?.user,
@@ -69,13 +76,28 @@ export default function LoginScreen() {
 
       return true;
     } else {
-      Alert.alert("해당 계정이 존재하지 않습니다.");
+      if (response.status == 401) {
+        setModalWords("존재하지 않는 유저입니다.");
+      } else if (response.status == 402) {
+        setModalWords("비밀번호를 틀리셨습니다.");
+      } else if (response.status == 500) {
+        setModalWords("서비스에 문제가 있어 수정중입니다.ㄴ");
+      }
       return false;
     }
   };
 
   return (
     <ScreenContainer>
+      <CustomModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+      >
+        <LoginErrorModalContents
+          setModalVisible={setModalVisible}
+          modalWords={modalWords}
+        />
+      </CustomModal>
       <LoginBox style={styles.LoginBoxUpper}>
         <LoginTitle variant="titleLarge">로그인하기</LoginTitle>
         <LoginInput
@@ -115,7 +137,7 @@ export default function LoginScreen() {
               if (response) {
                 navigation.navigate("서비스 소개");
               } else {
-                Alert.alert("계정 정보가 존재하지 않아요.");
+                setModalVisible(true);
               }
             };
 
@@ -138,12 +160,15 @@ export default function LoginScreen() {
             <View style={styles.SocialLoginBtns}>
               <Button
                 mode="outlined"
-                style={{ borderRadius: 10, paddingHorizontal: 10 }}
-                labelStyle={{
-                  fontSize: 18,
-                  fontWeight: "bold",
-                  color: "black",
-                }}
+                style={css`
+                  border-radius: 10px;
+                  padding: 0px 10px;
+                `}
+                labelStyle={css`
+                  font-size: 18px;
+                  font-weight: 700;
+                  color: black;
+                `}
                 onPress={() =>
                   navigation.navigate("Apply", { screen: "매칭결과 확인하기" })
                 }
@@ -152,24 +177,29 @@ export default function LoginScreen() {
               </Button>
               <Button
                 mode="outlined"
-                style={{ borderRadius: 10, paddingHorizontal: 10 }}
-                labelStyle={{
-                  fontSize: 18,
-                  fontWeight: "bold",
-                  color: "black",
-                }}
+                style={css`
+                  border-radius: 10px;
+                  padding: 0px 10px;
+                `}
+                labelStyle={css`
+                  font-size: 18px;
+                  font-weight: 700;
+                  color: black;
+                `}
               >
                 Google
               </Button>
             </View>
             <Button
               mode="contained"
-              style={{
-                width: "100%",
-                backgroundColor: "#ccc",
-                borderRadius: 10,
-              }}
-              labelStyle={{ fontSize: 20 }}
+              style={css`
+                width: 100%;
+                background-color: #ccc;
+                border-radius: 10px;
+              `}
+              labelStyle={css`
+                font-size: 20px;
+              `}
               onPress={() => {
                 navigation.navigate("회원가입");
               }}
