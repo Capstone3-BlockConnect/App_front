@@ -1,20 +1,43 @@
-import { Text } from "react-native";
+import { Alert, Text } from "react-native";
 import * as styles from "./NotifyScreen.style";
 import NotifyWithTime from "../../../components/atom/NotifyWithTime";
 import { css } from "@emotion/native";
 import { Checkbox } from "react-native-paper";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { ApplyMatching } from "../../../api/matchingApi";
+import { addTwoHours } from "../../../components/addTwoHours";
 
-const NotifyScreen = () => {
+const NotifyScreen = ({ route }) => {
+  const { requestData } = route.params;
   const navigation = useNavigation();
   const [checked, setChecked] = useState(false);
-  const [matchingInfo, setMatchingInfo] = useState({
-    date: "2023.10.11",
-  });
 
   const checkBoxHander = () => {
     setChecked(!checked);
+  };
+
+  const matchRequest = async () => {
+    const response = await ApplyMatching({
+      date: requestData?.date,
+      time: requestData?.time,
+      category: requestData?.category,
+      memo: requestData?.memo,
+    });
+
+    console.log(JSON.stringify(response));
+
+    return response.status;
+  };
+
+  const matchButtonHandler = async () => {
+    const result = await matchRequest();
+
+    if (result == 201) {
+      navigation.navigate("신청완료");
+    } else {
+      Alert.alert("알립니다.", "매칭이 신청되지 않았습니다");
+    }
   };
 
   return (
@@ -25,17 +48,20 @@ const NotifyScreen = () => {
     >
       <styles.CheckArea>
         <styles.AreaLabel>신청정보</styles.AreaLabel>
-        <styles.AreaLabel>{matchingInfo.date}</styles.AreaLabel>
+        <styles.AreaLabel>{requestData?.date}</styles.AreaLabel>
         <styles.NotifyComponentWrapper>
           <NotifyWithTime
             contentText="식사가능시간 시작"
-            timeText="13:00"
+            timeText={requestData?.time}
             lightColor="#F3BABD"
           />
-          <NotifyWithTime contentText="식사 매칭 시간" timeText="13-15" />
+          <NotifyWithTime
+            contentText="식사 매칭 시간"
+            timeText={`${requestData?.time}-${addTwoHours(requestData?.time)}`}
+          />
           <NotifyWithTime
             contentText="식사가능시간 마감"
-            timeText="15:00"
+            timeText={`${addTwoHours(requestData?.time)}`}
             lightColor="#F3BABD"
           />
         </styles.NotifyComponentWrapper>
@@ -108,9 +134,7 @@ const NotifyScreen = () => {
           `}
           isDisabled={!checked}
           disabled={checked ? false : true}
-          onPress={() => {
-            navigation.navigate("신청완료");
-          }}
+          onPress={matchButtonHandler}
         >
           제출하기
         </styles.ApplyButton>
