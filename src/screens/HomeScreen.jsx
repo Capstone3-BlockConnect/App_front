@@ -14,10 +14,6 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function HomeScreen() {
   const navigation = useNavigation();
-  navigation.setOptions({
-    headerLeft: () => null,
-    gestureEnabled: false,
-  });
 
   return (
     <ContainerView>
