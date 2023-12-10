@@ -125,7 +125,7 @@ export const RightUpperButton = styled.Pressable`
   border-radius: 10px;
 `;
 
-export const RightLowerButton = styled.View`
+export const RightLowerButton = styled.Pressable`
   width: 100%;
   height: 45%;
   background-color: #f4e6e7;
