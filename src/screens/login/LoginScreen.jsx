@@ -3,7 +3,6 @@ import {
   LoginBox,
   LoginInput,
   LoginTitle,
-  ModalContainer,
   ScreenContainer,
 } from "./LoginScreen.style";
 import { Alert, StyleSheet, View } from "react-native";
@@ -55,8 +54,8 @@ export default function LoginScreen() {
 
   const loginSubmit = async (id, pw) => {
     const response = await loginPost({ id: id, pw: pw });
-    const status = response.status;
-    const data = response.data;
+    const status = await response.status;
+    const data = await response.data;
 
     const storageResponse = await setStorage({
       asyncKey: "token",
@@ -66,12 +65,12 @@ export default function LoginScreen() {
     if (status === 200 && storageResponse.success) {
       afterLogined({
         token: data?.token,
-        userId: data?.user,
-        age: data?.age,
-        foodCategory: data?.foodCategory,
-        gender: data?.gender,
-        nickName: data?.nickName,
-        phoneNumber: data?.phoneNumber,
+        userId: data?.user?._id,
+        age: data?.user?.age,
+        foodCategory: data?.user?.foodCategory,
+        gender: data?.user?.gender,
+        nickName: data?.user?.nickname,
+        phoneNumber: data?.user?.phoneNumber,
       });
 
       return true;
@@ -81,11 +80,10 @@ export default function LoginScreen() {
       } else if (response.status == 402) {
         setModalWords("비밀번호를 틀리셨습니다.");
       } else if (response.status == 500) {
-        setModalWords("서비스에 문제가 있어 수정중입니다.ㄴ");
+        setModalWords("서비스에 문제가 있어 수정중입니다.");
       }
       return false;
     }
-
   };
 
   return (
