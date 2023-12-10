@@ -18,9 +18,23 @@ export const ApplyMatching = async ({ date, time, category, memo }) => {
       category: category,
     });
 
-    console.log(response.status);
+    return response;
+  } catch (e) {
+    console.error(e);
+  } finally {
+  }
+};
 
-    return { success: response.status, data: response.data };
+/*
+전체 매칭 수를 가져옴
+*/
+export const getMatchCount = async () => {
+  try {
+    const url = `/matchings/statistics`;
+
+    const response = await apiBase.get(url);
+
+    return response.data;
   } catch (e) {
     console.error(e);
   } finally {
