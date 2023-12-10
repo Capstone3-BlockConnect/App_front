@@ -7,8 +7,7 @@ import { css } from "@emotion/native";
 const MyInfoScreen = () => {
   const userInfo = useRecoilValue(userState);
 
-  const { nickName, gender, age, phoneNumber, foodCategory, userId } =
-    userInfo.userId;
+  const { nickName, gender, age, phoneNumber, foodCategory, userId } = userInfo;
   return (
     <styles.Container
       contentContainerStyle={css`
@@ -21,7 +20,7 @@ const MyInfoScreen = () => {
          */}
         <styles.GreetBox>
           <styles.GreetFirstArea>
-            <styles.GreetBoldText>꿈꾸는 계란님</styles.GreetBoldText>
+            <styles.GreetBoldText>{nickName}님</styles.GreetBoldText>
             <styles.GreetNormalText> 환영합니다!</styles.GreetNormalText>
           </styles.GreetFirstArea>
           <styles.GreetNormalText>밥은 드셨나요?</styles.GreetNormalText>
@@ -37,11 +36,17 @@ const MyInfoScreen = () => {
               <styles.UpperBoldText>
                 {nickName || "닉네임을 등록해주세요"}
               </styles.UpperBoldText>
-              <styles.UpperSubText>21살</styles.UpperSubText>
-              <styles.UpperSubText>ENFP</styles.UpperSubText>
+              <styles.UpperSubText>{age}살</styles.UpperSubText>
+              <styles.UpperSubText>
+                상대방에게 보여질 프로필 화면이에요
+              </styles.UpperSubText>
             </styles.UpperInfoTextArea>
           </styles.UpperWrapper>
-          <styles.LowerWrapper>
+          <styles.LowerWrapper
+            style={css`
+              background-color: white;
+            `}
+          >
             <styles.LowerTitle>내 정보 살펴보기</styles.LowerTitle>
             <styles.LowerItem>
               <styles.LowerItemTitleWrapper>
