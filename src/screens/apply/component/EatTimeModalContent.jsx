@@ -2,20 +2,34 @@ import styled, { css } from "@emotion/native";
 import { useState } from "react";
 import { Button } from "react-native-paper";
 
-const EatTimeModalContent = ({ setModalVisible }) => {
-  const [chosenTime, setChosenTime] = useState("12:00");
+const EatTimeModalContent = ({
+  setModalVisible,
+  setRequestData,
+  requestData,
+}) => {
   const timeList = ["12:00", "13:00", "14:00", "17:00", "18:00", "19:00"];
   const lunch = timeList.splice(0, 3);
   const dinner = timeList.splice(0, 3);
+
   return (
-    <Container>
+    <Container
+      onPress={(e) => {
+        e.preventDefault();
+      }}
+    >
       <ContainerTitle>식사 시간을 선택해주세요</ContainerTitle>
       <ChooseArea>
         <AreaLabel>점심식사</AreaLabel>
         <TimeButtonBox>
-          {lunch.map((element, index) => (
-            <TimeButton key={index}>
-              <TimeButtonText>{element}</TimeButtonText>
+          {lunch.map((time, index) => (
+            <TimeButton
+              key={index}
+              onPress={() => {
+                setRequestData((prev) => ({ ...prev, time: time }));
+              }}
+              selected={requestData?.time == time}
+            >
+              <TimeButtonText>{time}</TimeButtonText>
             </TimeButton>
           ))}
         </TimeButtonBox>
@@ -24,9 +38,15 @@ const EatTimeModalContent = ({ setModalVisible }) => {
       <ChooseArea>
         <AreaLabel>저녁식사</AreaLabel>
         <TimeButtonBox>
-          {dinner.map((element, index) => (
-            <TimeButton key={index}>
-              <TimeButtonText>{element}</TimeButtonText>
+          {dinner.map((time, index) => (
+            <TimeButton
+              key={index}
+              onPress={() => {
+                setRequestData((prev) => ({ ...prev, time: time }));
+              }}
+              selected={requestData?.time == time}
+            >
+              <TimeButtonText>{time}</TimeButtonText>
             </TimeButton>
           ))}
         </TimeButtonBox>
@@ -51,7 +71,7 @@ const EatTimeModalContent = ({ setModalVisible }) => {
 
 export default EatTimeModalContent;
 
-const Container = styled.View`
+const Container = styled.Pressable`
   flex-flow: column nowrap;
 
   background-color: white;
@@ -83,14 +103,15 @@ const TimeButtonBox = styled.View`
   column-gap: 15px;
 `;
 
-const TimeButton = styled.View`
+const TimeButton = styled.Pressable`
   border-radius: 10px;
-  background-color: ${(props) => (props.selected ? "#E5F0DB" : "#f4e6e7")};
+  background-color: ${(props) => (props.selected ? "#b5ff71" : "#f4e6e7")};
 
   align-items: center;
   justify-content: center;
   padding: 10px 23px;
-  border: 1px solid black;
+  border: ${(props) =>
+    props.selected ? "2px solid black" : "1px solid black"};
 `;
 
 const TimeButtonText = styled.Text`
