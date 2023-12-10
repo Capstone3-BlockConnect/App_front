@@ -5,40 +5,76 @@ import { css } from "@emotion/native";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import EatTimeModalContent from "./EatTimeModalContent";
+import FoodModalContent from "./FoodModalContent";
+import MemoModalContent from "./MemoModalContent";
+import { useRecoilValue } from "recoil";
+import { userState } from "../../../store/LoginState";
+
 const InputBox = ({ modalVisible, setModalVisible }) => {
+  const navigation = useNavigation();
+  const [foodModalVisible, setFoodModalVisible] = useState(false);
+  const [memoModalVisible, setMemoModalVisible] = useState(false);
+  const { nickName, age } = useRecoilValue(userState);
   const [requestData, setRequestData] = useState({
-    date: "",
-    time: "",
-    category: "양식",
-    memo: "잘 부탁드립니다",
+    date: "2023-12-11",
+    time: "12:00",
+    category: "카페",
+    memo: "",
   });
 
-  const navigation = useNavigation();
+  console.log(requestData);
 
-  useEffect(() => {
-    console.log(`modal Visible : ${modalVisible}`);
-  }, [modalVisible]);
   return (
-    <View>
+    <View
+      style={css`
+        padding-top: 10px;
+      `}
+    >
+      <CustomModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+      >
+        <EatTimeModalContent
+          setModalVisible={setModalVisible}
+          setRequestData={setRequestData}
+          requestData={requestData}
+        />
+      </CustomModal>
+      <CustomModal
+        modalVisible={foodModalVisible}
+        setModalVisible={setFoodModalVisible}
+      >
+        <FoodModalContent
+          setModalVisible={setFoodModalVisible}
+          requestData={requestData}
+          setRequestData={setRequestData}
+        />
+      </CustomModal>
+      <CustomModal
+        modalVisible={memoModalVisible}
+        setModalVisible={setMemoModalVisible}
+      >
+        <MemoModalContent
+          setModalVisible={setMemoModalVisible}
+          requestData={requestData}
+          setRequestData={setRequestData}
+        />
+      </CustomModal>
       <styles.ContentArea>
         <styles.InputLabelBox>
-          <styles.LabelText>임기현님,</styles.LabelText>
+          <styles.LabelText>
+            {nickName || "닉네임이 없어요"}님,
+          </styles.LabelText>
           <styles.LabelText>
             매칭 신청에 필요한 정보를 입력해주세요
           </styles.LabelText>
         </styles.InputLabelBox>
 
-        <styles.InputLabelBox></styles.InputLabelBox>
         <styles.InfoBox>
           <styles.InputBoxContent>2023.10.11</styles.InputBoxContent>
           <styles.Title>식사날짜를 선택해주세요</styles.Title>
         </styles.InfoBox>
-        <CustomModal
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-        >
-          <EatTimeModalContent setModalVisible={setModalVisible} />
-        </CustomModal>
+
         <styles.InfoBox
           onPress={() => {
             setModalVisible(true);
@@ -51,15 +87,25 @@ const InputBox = ({ modalVisible, setModalVisible }) => {
         </styles.InfoBox>
 
         <styles.HorizontalInputContainer>
-          <styles.FoodBox>
+          <styles.FoodBox
+            onPress={() => {
+              setFoodModalVisible(true);
+            }}
+          >
             <styles.InputBoxContent>
               {requestData.category}
             </styles.InputBoxContent>
             <styles.Title>선호 음식 카테고리</styles.Title>
           </styles.FoodBox>
 
-          <styles.MemoBox>
-            <styles.MemoBoldContent>{requestData.memo}</styles.MemoBoldContent>
+          <styles.MemoBox
+            onPress={() => {
+              setMemoModalVisible(true);
+            }}
+          >
+            <styles.MemoBoldContent>
+              {requestData.memo || "입력하기"}
+            </styles.MemoBoldContent>
             <styles.Title>메모</styles.Title>
           </styles.MemoBox>
         </styles.HorizontalInputContainer>
@@ -85,7 +131,9 @@ const InputBox = ({ modalVisible, setModalVisible }) => {
             font-size: 17px;
           `}
           onPress={() => {
-            navigation.navigate("신청정보 확인하기");
+            navigation.navigate("신청정보 확인하기", {
+              requestData: requestData,
+            });
           }}
         >
           신청하기
