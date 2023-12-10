@@ -17,6 +17,7 @@ import { setStorage } from "../../asyncStorage/asyncStorage";
 import CustomModal from "../../components/modal/CustomModal";
 import LoginErrorModalContents from "./components/LoginErrorModalContents";
 import { css } from "@emotion/native";
+import { apiBase } from "../../api/apiBase";
 
 export default function LoginScreen() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -61,6 +62,9 @@ export default function LoginScreen() {
       asyncKey: "token",
       data: data?.token,
     });
+
+    // 로그인 시에 Axios 인스턴스 업데이트
+    apiBase.defaults.headers.common["Authorization"] = `${data?.token}`;
 
     if (status === 200 && storageResponse.success) {
       afterLogined({
