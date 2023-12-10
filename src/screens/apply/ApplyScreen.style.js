@@ -3,13 +3,9 @@ import { Button } from "react-native-paper";
 
 // ------ Container Level ------
 
-export const Container = styled.View`
-  flex: 1 1 100%;
-  background-color: white;
-
+export const Container = styled.ScrollView`
   padding: 20px 10px;
-
-  row-gap: 20px;
+  background-color: white;
 `;
 
 // ------ Area Level ------
