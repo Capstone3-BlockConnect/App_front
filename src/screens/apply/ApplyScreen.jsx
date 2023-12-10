@@ -42,22 +42,18 @@ export default function ApplyScreen() {
           setModalVisible={setModalVisible}
         />
       ) : (
-        // <styles.LoginBox>
-        //   <styles.LoginContent>로그인하시고</styles.LoginContent>
-        //   <styles.LoginContent>우리 밥 같이 먹어요!</styles.LoginContent>
-        //   <AnimatedLottieView
-        //     source={require("../../../assets/lottie/loginLottie.json")}
-        //     autoPlay
-        //     loop
-        //     style={css`
-        //       margin-top: auto;
-        //     `}
-        //   />
-        // </styles.LoginBox>
-        <InputBox
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-        />
+        <styles.LoginBox>
+          <styles.LoginContent>로그인하시고</styles.LoginContent>
+          <styles.LoginContent>우리 밥 같이 먹어요!</styles.LoginContent>
+          <AnimatedLottieView
+            source={require("../../../assets/lottie/loginLottie.json")}
+            autoPlay
+            loop
+            style={css`
+              margin-top: auto;
+            `}
+          />
+        </styles.LoginBox>
       )}
     </styles.Container>
   );
