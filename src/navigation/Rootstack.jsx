@@ -48,18 +48,18 @@ const Rootstack = () => {
             tabBarIcon: () => <MaterialCommunityIcons name="home" size={32} />,
             tabBarActiveBackgroundColor: "#72727220",
           }}
-          listeners={({ navigation }) => ({
-            tabPress: (e) => {
-              // 로그인 상태가 아니라면 기본 동작을 방지하고 로그인 스크린으로 리디렉션
-              if (!isLogined) {
-                e.preventDefault();
-                navigation.navigate("로그인");
-              } else {
-                e.preventDefault();
-                navigation.navigate("서비스 소개");
-              }
-            },
-          })}
+          // listeners={({ navigation }) => ({
+          //   tabPress: (e) => {
+          //     // 로그인 상태가 아니라면 기본 동작을 방지하고 로그인 스크린으로 리디렉션
+          //     if (!isLogined) {
+          //       e.preventDefault();
+          //       navigation.navigate("로그인");
+          //     } else {
+          //       e.preventDefault();
+          //       navigation.navigate("서비스 소개");
+          //     }
+          //   },
+          // })}
         />
         <Tab.Screen
           name="Apply"
@@ -71,12 +71,12 @@ const Rootstack = () => {
 
             tabBarActiveBackgroundColor: "#72727220",
           }}
-          listeners={({ navigation }) => ({
-            tabPress: (e) => {
-              //e.preventDefault();
-              navigation.navigate("매칭 신청하기");
-            },
-          })}
+          // listeners={({ navigation }) => ({
+          //   tabPress: (e) => {
+          //     //e.preventDefault();
+          //     navigation.navigate("매칭 신청하기");
+          //   },
+          // })}
         />
         <Tab.Screen
           name="Profile"
