@@ -64,6 +64,8 @@ export const ProfileImage = styled.View`
 
 export const UpperInfoTextArea = styled.View`
   flex-flow: column nowrap;
+  justify-content: center;
+  padding-bottom: 5px;
   row-gap: 10px;
 `;
 
