@@ -18,6 +18,7 @@ import CustomModal from "../../components/modal/CustomModal";
 import LoginErrorModalContents from "./components/LoginErrorModalContents";
 import { css } from "@emotion/native";
 import { apiBase } from "../../api/apiBase";
+import { color } from "../../../assets/colors/color";
 
 export default function LoginScreen() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -199,6 +200,8 @@ export default function LoginScreen() {
                 width: 100%;
                 background-color: #ccc;
                 border-radius: 10px;
+                background-color: ${color.BtnPrimary};
+                border: 1px solid gray;
               `}
               labelStyle={css`
                 font-size: 20px;

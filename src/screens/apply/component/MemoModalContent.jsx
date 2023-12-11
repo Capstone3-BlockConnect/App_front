@@ -15,13 +15,14 @@ const MemoModalContent = ({ setModalVisible, requestData, setRequestData }) => {
       </TextArea>
       <MemoArea>
         <TextInput
-          label="클릭"
+          // label="터치"
           style={css`
             font-size: 12px;
             background-color: white;
             border: 1px solid black;
             flex: 1;
             color: black;
+            padding-top: 5px;
           `}
           outlineStyle={css`
             border-color: black;

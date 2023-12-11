@@ -90,7 +90,7 @@ const OptionButton = styled.Pressable`
   flex: 1 1 30%;
 
   border: ${(props) =>
-    props.selected ? "2px solid black" : "1px solid black"};
+    props.selected ? "1px solid black" : "1px solid black"};
   background-color: ${(props) => (props.selected ? "#b5ff71" : "#f4e6e7")};
 `;
 const OptionButtonText = styled.Text`

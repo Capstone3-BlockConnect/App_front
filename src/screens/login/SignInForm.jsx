@@ -158,23 +158,46 @@ export default function SignInForm({ navigation }) {
         </styles.LabelArea>
         <styles.LabelArea>
           <styles.Label>핸드폰번호</styles.Label>
-          <TextInput
-            mode="outlined"
-            style={{
-              width: "100%",
-              alignSelf: "center",
-              backgroundColor: "white",
-            }}
-            onChangeText={(text) => {
-              setFormData((prev) => ({ ...prev, phoneNum: text }));
-            }}
-            placeholder="01011111111(-를 빼주세요)"
-            outlineColor="black"
-            cursorColor="black"
-            inputMode="numeric"
-            activeOutlineColor="black"
-            placeholderTextColor="black"
-          />
+          <View
+            style={css`
+              flex-flow: row nowrap;
+              column-gap: 5px;
+            `}
+          >
+            <TextInput
+              mode="outlined"
+              style={css`
+                width: 100%;
+                align-self: center;
+                background-color: white;
+                flex: 3 1 70%;
+              `}
+              onChangeText={(text) => {
+                setFormData((prev) => ({ ...prev, phoneNum: text }));
+              }}
+              placeholder="01011111111(-를 빼주세요)"
+              outlineColor="black"
+              cursorColor="black"
+              inputMode="numeric"
+              activeOutlineColor="black"
+              placeholderTextColor="black"
+            />
+            <Button
+              mode="contained"
+              style={css`
+                border-radius: 8px;
+                flex: 1 1 100px;
+                background-color: ${color.BtnPrimary};
+                justify-content: center;
+              `}
+              labelStyle={css`
+                font-size: 14px;
+                font-weight: 700;
+              `}
+            >
+              인증하기
+            </Button>
+          </View>
         </styles.LabelArea>
         <styles.LabelArea>
           <styles.Label>나이</styles.Label>
