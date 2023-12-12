@@ -111,7 +111,7 @@ const TimeButton = styled.Pressable`
   justify-content: center;
   padding: 10px 23px;
   border: ${(props) =>
-    props.selected ? "2px solid black" : "1px solid black"};
+    props.selected ? "1px solid black" : "1px solid black"};
 `;
 
 const TimeButtonText = styled.Text`

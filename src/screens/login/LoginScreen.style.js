@@ -11,11 +11,13 @@ export const ScreenContainer = styled.View`
 export const LoginBox = styled.View``;
 export const LoginTitle = styled(Text)`
   margin-bottom: 2%;
+  color: black;
 `;
 
 export const LoginInput = styled(TextInput)`
   margin-bottom: 2%;
   background-color: white;
+  color: black;
 `;
 
 export const LoginButton = styled(Button)`

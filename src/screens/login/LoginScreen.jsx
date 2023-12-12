@@ -202,6 +202,7 @@ export default function LoginScreen() {
                 border-radius: 10px;
                 background-color: ${color.BtnPrimary};
                 border: 1px solid gray;
+                color: white;
               `}
               labelStyle={css`
                 font-size: 20px;
