@@ -22,6 +22,7 @@ import { useRecoilValue } from "recoil";
 import { loginState } from "../store/LoginState";
 import SuccessScreen from "../screens/apply/success/SuccessScreen";
 import SuccessSignIn from "../screens/login/SuccessSignIn";
+import VersionScreen from "../screens/profile/version/VersionScreen";
 
 // ----- [ Tabs ] ------
 const Tab = createBottomTabNavigator();
@@ -142,6 +143,11 @@ const ProfileTabScreens = () => {
         name="chatManage"
         options={{ title: "내 채팅링크 관리하기" }}
         component={ChatManageScreen}
+      />
+      <ProfileStack.Screen
+        name="version"
+        options={{ title: "버전 및 개발" }}
+        component={VersionScreen}
       />
     </ProfileStack.Navigator>
   );
