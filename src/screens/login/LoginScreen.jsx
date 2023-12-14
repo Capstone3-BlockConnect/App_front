@@ -51,6 +51,7 @@ export default function LoginScreen() {
       foodCategory: foodCategory,
       gender: gender,
       phoneNumber: phoneNumber,
+      coin: 0,
     });
   };
 

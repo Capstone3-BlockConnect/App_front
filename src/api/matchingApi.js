@@ -67,7 +67,7 @@ export const getMatchLog = async () => {
 */
 export const getMatchedLog = async () => {
   try {
-    const url = `matchings/my`;
+    const url = `/matchings/my`;
     const response = await apiBase.get(url);
 
     return { status: response.status, data: response.data };
@@ -75,5 +75,38 @@ export const getMatchedLog = async () => {
     console.error(e);
     return e?.response;
   } finally {
+  }
+};
+
+/*
+id로 유저정보 조회하기
+ */
+export const getUserProfile = async ({ id }) => {
+  try {
+    const url = `/users/profile/${id}`;
+    const response = await apiBase.get(url);
+
+    return { status: response.status, data: response.data };
+  } catch (e) {
+    console.error(e);
+    return e.response;
+  } finally {
+  }
+};
+
+/*
+id로 채팅링크 가져오기
+*/
+
+export const getChatLink = async ({ id }) => {
+  try {
+    const url = `/users/openChatLink/${id}`;
+
+    const response = await apiBase.get(url);
+
+    return { status: response?.status, data: response?.data };
+  } catch (e) {
+    console.error(e);
+    return e.response;
   }
 };

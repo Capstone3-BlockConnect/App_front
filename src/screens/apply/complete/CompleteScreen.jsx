@@ -4,8 +4,15 @@ import { css } from "@emotion/native";
 import CustomModal from "../../../components/modal/CustomModal";
 import { useState } from "react";
 import ChatLinkModal from "./ChatLinkModal";
-const CompleteScreen = () => {
+import { useRecoilValue } from "recoil";
+import { userState } from "../../../store/LoginState";
+
+const CompleteScreen = ({ route }) => {
   const [modalVisible, setModalVisible] = useState(false);
+  const { nickName } = useRecoilValue(userState);
+  console.log(nickName);
+
+  const { name, age, gender, date } = route.params;
 
   return (
     <styles.Container
@@ -18,12 +25,12 @@ const CompleteScreen = () => {
         setModalVisible={setModalVisible}
       >
         <ChatLinkModal
-          chatLink="http:www.suwon"
+          chatLink="https://open.kakao.com/o/gKEDMQXf"
           setModalVisible={setModalVisible}
         />
       </CustomModal>
       <styles.MatchingInfoArea>
-        <styles.AreaLabel>임기현 님의 10월 12일 매칭정보</styles.AreaLabel>
+        <styles.AreaLabel>{nickName} 님의 2023-12-11 매칭정보</styles.AreaLabel>
 
         <profileStyle.UpperWrapper
           style={css`
@@ -36,11 +43,9 @@ const CompleteScreen = () => {
         >
           <profileStyle.ProfileImage />
           <profileStyle.UpperInfoTextArea>
-            <profileStyle.UpperBoldText>
-              "닉네임을 등록해주세요"
-            </profileStyle.UpperBoldText>
-            <profileStyle.UpperSubText>21살</profileStyle.UpperSubText>
-            <profileStyle.UpperSubText>ENFP</profileStyle.UpperSubText>
+            <profileStyle.UpperBoldText>임수원</profileStyle.UpperBoldText>
+            <profileStyle.UpperSubText>27살</profileStyle.UpperSubText>
+            <profileStyle.UpperSubText>남자</profileStyle.UpperSubText>
           </profileStyle.UpperInfoTextArea>
         </profileStyle.UpperWrapper>
       </styles.MatchingInfoArea>

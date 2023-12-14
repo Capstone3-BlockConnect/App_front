@@ -9,20 +9,64 @@ import FoodModalContent from "./FoodModalContent";
 import MemoModalContent from "./MemoModalContent";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../../store/LoginState";
+import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 
 const InputBox = ({ modalVisible, setModalVisible }) => {
   const navigation = useNavigation();
+  const [isAllChecked, setIsAllChecked] = useState(false);
   const [foodModalVisible, setFoodModalVisible] = useState(false);
   const [memoModalVisible, setMemoModalVisible] = useState(false);
   const { nickName, age } = useRecoilValue(userState);
   const [requestData, setRequestData] = useState({
-    date: "2023-12-11",
-    time: "12:00",
-    category: "카페",
+    date: "",
+    time: "",
+    category: "",
     memo: "",
   });
 
   console.log(requestData);
+
+  const [date, setDate] = useState(new Date());
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    setDate(currentDate);
+    const selectedData = `${currentDate.getFullYear()}-${
+      currentDate.getMonth() + 1
+    }-${currentDate.getDate()}`;
+    setRequestData((prev) => ({
+      ...prev,
+      date: selectedData,
+    }));
+  };
+
+  const showMode = (currentMode) => {
+    DateTimePickerAndroid.open({
+      value: date,
+      onChange,
+      mode: currentMode,
+      is24Hour: true,
+    });
+  };
+
+  const showDatepicker = () => {
+    showMode("date");
+  };
+
+  const conditionCheck = () => {
+    if (
+      requestData.category &&
+      requestData.date &&
+      requestData.memo &&
+      requestData.time
+    ) {
+      setIsAllChecked(true);
+    }
+  };
+
+  useEffect(() => {
+    conditionCheck();
+  }, [requestData]);
 
   return (
     <View
@@ -70,8 +114,14 @@ const InputBox = ({ modalVisible, setModalVisible }) => {
           </styles.LabelText>
         </styles.InputLabelBox>
 
-        <styles.InfoBox>
-          <styles.InputBoxContent>2023.10.11</styles.InputBoxContent>
+        <styles.InfoBox
+          onPress={() => {
+            showDatepicker();
+          }}
+        >
+          <styles.InputBoxContent>
+            {requestData.date || "선택"}
+          </styles.InputBoxContent>
           <styles.Title>식사날짜를 선택해주세요</styles.Title>
         </styles.InfoBox>
 
@@ -81,7 +131,7 @@ const InputBox = ({ modalVisible, setModalVisible }) => {
           }}
         >
           <styles.InputBoxContent>
-            {requestData.time || "클릭"}
+            {requestData.time || "선택"}
           </styles.InputBoxContent>
           <styles.Title>식사시간을 선택해주세요</styles.Title>
         </styles.InfoBox>
@@ -93,7 +143,7 @@ const InputBox = ({ modalVisible, setModalVisible }) => {
             }}
           >
             <styles.InputBoxContent>
-              {requestData.category}
+              {requestData.category || "선택"}
             </styles.InputBoxContent>
             <styles.Title>선호 음식 카테고리</styles.Title>
           </styles.FoodBox>
