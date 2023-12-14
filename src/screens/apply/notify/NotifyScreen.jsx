@@ -123,6 +123,9 @@ const NotifyScreen = ({ route }) => {
             color: black;
             font-size: 17px;
           `}
+          onPress={() => {
+            navigation.goBack();
+          }}
         >
           취소하기
         </styles.CancelButton>
