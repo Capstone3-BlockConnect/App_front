@@ -18,5 +18,6 @@ export const userState = atom({
     phoneNumber: "",
     foodCategory: "",
     chatLink: "",
+    coin: "",
   },
 });
