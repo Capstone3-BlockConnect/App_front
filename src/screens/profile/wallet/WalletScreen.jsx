@@ -1,9 +1,9 @@
-
 import * as styles from "./WalletScreen.style";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Entypo from "@expo/vector-icons/Entypo";
 import { ScrollView } from "react-native";
-const WalletScreen = () => {
+const WalletScreen = ({ route }) => {
+  const { balance } = route.params;
   const dateInstance = new Date();
   const date = `${dateInstance.getFullYear()}.${
     dateInstance.getMonth() + 1
@@ -25,7 +25,7 @@ const WalletScreen = () => {
           </styles.CardTitleArea>
           <styles.CardBalanceArea>
             <Ionicons name="logo-bitcoin" size={20} color="white" />
-            <styles.CardBalance>24000.44</styles.CardBalance>
+            <styles.CardBalance>{balance}</styles.CardBalance>
           </styles.CardBalanceArea>
           <styles.VerifiedText>VERIFIED</styles.VerifiedText>
         </styles.SoongbobCardWrapper>
@@ -36,7 +36,7 @@ const WalletScreen = () => {
           <styles.BalanceBox>
             <styles.BalanceTitle>총 잔액</styles.BalanceTitle>
             <styles.BalanceArea>
-              <styles.BalanceText>24000.44</styles.BalanceText>
+              <styles.BalanceText>{balance}</styles.BalanceText>
               <styles.CoinUnit> sbc</styles.CoinUnit>
             </styles.BalanceArea>
             <styles.ButtonArea>
